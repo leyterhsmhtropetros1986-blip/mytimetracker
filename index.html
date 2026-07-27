@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#111827"
+  >
+
+  <meta
+    name="description"
+    content="Προσωπική εφαρμογή καταγραφής και προγραμματισμού χρόνου."
+  >
+
+  <title>My Time Tracker</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Προσωπική οργάνωση χρόνου</p>
+      <h1>My Time Tracker</h1>
+    </div>
+
+    <div id="current-date" class="header-date"></div>
+  </header>
+
+  <main class="container">
+
+    <!-- Γρήγορη πλοήγηση -->
+    <nav class="app-navigation" aria-label="Κύρια πλοήγηση">
+
+      <button
+        type="button"
+        class="nav-button active"
+        data-section-target="calendar-section"
+      >
+        Ημερολόγιο
+      </button>
+
+      <button
+        type="button"
+        class="nav-button"
+        data-section-target="timer-section"
+      >
+        Χρονόμετρο
+      </button>
+
+      <button
+        type="button"
+        class="nav-button"
+        data-section-target="assistant-section"
+      >
+        Ψηφιακός Βοηθός
+      </button>
+
+    </nav>
+
+    <!-- Σύνοψη -->
+    <section class="summary-grid">
+
+      <article class="summary-item">
+        <p>Σήμερα</p>
+        <strong id="today-total">00:00:00</strong>
+      </article>
+
+      <article class="summary-item">
+        <p>Επιλεγμένη ημέρα</p>
+        <strong id="selected-day-total">00:00:00</strong>
+      </article>
+
+      <article class="summary-item">
+        <p>Tasks ημέρας</p>
+        <strong id="selected-day-count">0</strong>
+      </article>
+
+    </section>
+
+    <!-- Ημερολόγιο -->
+    <section id="calendar-section" class="card app-section">
+
+      <div class="calendar-header">
+
+        <button
+          id="previous-month-button"
+          class="icon-button"
+          type="button"
+          aria-label="Προηγούμενος μήνας"
+        >
+          ‹
+        </button>
+
+        <div class="calendar-title-wrapper">
+          <p class="eyebrow">Ημερολόγιο</p>
+          <h2 id="calendar-month-title"></h2>
+        </div>
+
+        <button
+          id="next-month-button"
+          class="icon-button"
+          type="button"
+          aria-label="Επόμενος μήνας"
+        >
+          ›
+        </button>
+
+      </div>
+
+      <div class="calendar-weekdays">
+        <div>Δευ</div>
+        <div>Τρι</div>
+        <div>Τετ</div>
+        <div>Πεμ</div>
+        <div>Παρ</div>
+        <div>Σαβ</div>
+        <div>Κυρ</div>
+      </div>
+
+      <div id="calendar-grid" class="calendar-grid"></div>
+
+      <button
+        id="today-button"
+        class="button button-light full-width-button"
+        type="button"
+      >
+        Μετάβαση στη σημερινή ημέρα
+      </button>
+
+    </section>
+
+    <!-- Επιλεγμένη ημέρα -->
+    <section class="selected-day-banner">
+
+      <div>
+        <p class="eyebrow">Επιλεγμένη ημερομηνία</p>
+        <h2 id="selected-date-title"></h2>
+      </div>
+
+      <button
+        id="open-manual-entry-button"
+        class="button button-primary"
+        type="button"
+      >
+        + Νέα καταχώρηση
+      </button>
+
+    </section>
+
+    <!-- Χρονόμετρο -->
+    <section id="timer-section" class="card app-section">
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Άμεση καταγραφή</p>
+          <h2>Χρονόμετρο task</h2>
+        </div>
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-group form-group-full">
+          <label for="task-name">Όνομα task</label>
+
+          <input
+            type="text"
+            id="task-name"
+            placeholder="π.χ. Προετοιμασία οικονομικής αναφοράς"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="category">Κατηγορία</label>
+
+          <select id="category">
+            <option value="Εργασία">Εργασία</option>
+            <option value="Project">Project</option>
+            <option value="Προσωπικά">Προσωπικά</option>
+            <option value="Γυμναστική">Γυμναστική</option>
+            <option value="Διάβασμα">Διάβασμα</option>
+            <option value="Σπίτι">Σπίτι</option>
+            <option value="Άλλο">Άλλο</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="task-notes">Σημειώσεις</label>
+
+          <input
+            type="text"
+            id="task-notes"
+            placeholder="Προαιρετικά"
+          >
+        </div>
+
+      </div>
+
+      <div id="timer-display" class="timer-display">
+        00:00:00
+      </div>
+
+      <div class="timer-actions">
+
+        <button
+          id="start-button"
+          class="button button-primary"
+          type="button"
+        >
+          Έναρξη
+        </button>
+
+        <button
+          id="pause-button"
+          class="button button-warning"
+          type="button"
+          disabled
+        >
+          Παύση
+        </button>
+
+        <button
+          id="stop-button"
+          class="button button-danger"
+          type="button"
+          disabled
+        >
+          Τέλος και αποθήκευση
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- Ψηφιακός βοηθός -->
+    <section id="assistant-section" class="card app-section">
+
+      <div class="assistant-heading">
+
+        <div>
+          <p class="eyebrow">Έξυπνος προγραμματισμός</p>
+          <h2>Ψηφιακός Βοηθός</h2>
+
+          <p class="section-description">
+            Δήλωσε τον διαθέσιμο χρόνο και τα tasks σου. Ο βοηθός
+            θα προτείνει μια πρακτική κατανομή ωρών.
+          </p>
+        </div>
+
+        <span class="assistant-badge">
+          Τοπικός βοηθός
+        </span>
+
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label for="assistant-date">Ημερομηνία προγράμματος</label>
+          <input type="date" id="assistant-date">
+        </div>
+
+        <div class="form-group">
+          <label for="available-hours">Διαθέσιμες ώρες</label>
+
+          <input
+            type="number"
+            id="available-hours"
+            min="0.5"
+            max="24"
+            step="0.5"
+            value="8"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="day-start-time">Ώρα έναρξης ημέρας</label>
+          <input type="time" id="day-start-time" value="09:00">
+        </div>
+
+        <div class="form-group">
+          <label for="break-minutes">Διάλειμμα μεταξύ tasks</label>
+
+          <select id="break-minutes">
+            <option value="0">Χωρίς διάλειμμα</option>
+            <option value="5">5 λεπτά</option>
+            <option value="10" selected>10 λεπτά</option>
+            <option value="15">15 λεπτά</option>
+            <option value="30">30 λεπτά</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="assistant-task-builder">
+
+        <h3>Tasks προς κατανομή</h3>
+
+        <div class="assistant-task-row">
+
+          <div class="form-group">
+            <label for="assistant-task-name">Task</label>
+
+            <input
+              type="text"
+              id="assistant-task-name"
+              placeholder="π.χ. Κλείσιμο μήνα"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="assistant-task-hours">Ώρες</label>
+
+            <input
+              type="number"
+              id="assistant-task-hours"
+              min="0.25"
+              max="24"
+              step="0.25"
+              value="1"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="assistant-task-priority">Προτεραιότητα</label>
+
+            <select id="assistant-task-priority">
+              <option value="3">Υψηλή</option>
+              <option value="2" selected>Μεσαία</option>
+              <option value="1">Χαμηλή</option>
+            </select>
+          </div>
+
+          <button
+            id="add-assistant-task-button"
+            class="button button-primary assistant-add-button"
+            type="button"
+          >
+            Προσθήκη
+          </button>
+
+        </div>
+
+        <div id="assistant-task-list" class="assistant-task-list">
+
+          <div id="assistant-empty-tasks" class="empty-state small-empty">
+            Δεν έχεις προσθέσει tasks.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="assistant-actions">
+
+        <button
+          id="generate-plan-button"
+          class="button button-primary"
+          type="button"
+        >
+          Πρότεινε κατανομή ωρών
+        </button>
+
+        <button
+          id="clear-assistant-button"
+          class="button button-light"
+          type="button"
+        >
+          Καθαρισμός
+        </button>
+
+      </div>
+
+      <div
+        id="assistant-message"
+        class="assistant-message"
+        aria-live="polite"
+        hidden
+      ></div>
+
+      <div id="assistant-plan-wrapper" hidden>
+
+        <div class="plan-header">
+          <div>
+            <p class="eyebrow">Πρόταση βοηθού</p>
+            <h3>Προτεινόμενο πρόγραμμα</h3>
+          </div>
+
+          <button
+            id="save-plan-button"
+            class="button button-success"
+            type="button"
+          >
+            Προσθήκη στο ημερολόγιο
+          </button>
+        </div>
+
+        <div id="assistant-plan-list" class="assistant-plan-list"></div>
+
+      </div>
+
+    </section>
+
+    <!-- Καταχωρήσεις ημέρας -->
+    <section class="card">
+
+      <div class="section-heading section-heading-actions">
+
+        <div>
+          <p id="entries-date-label" class="eyebrow">Ημέρα</p>
+          <h2>Καταχωρήσεις</h2>
+        </div>
+
+        <button
+          id="clear-day-button"
+          class="button button-light danger-text"
+          type="button"
+        >
+          Διαγραφή ημέρας
+        </button>
+
+      </div>
+
+      <div id="empty-state" class="empty-state">
+        Δεν υπάρχουν καταχωρήσεις για αυτή την ημέρα.
+      </div>
+
+      <div id="entries-list" class="entries-list"></div>
+
+    </section>
+
+  </main>
+
+  <!-- Modal χειροκίνητης καταχώρησης / επεξεργασίας -->
+  <div id="entry-modal" class="modal" hidden>
+
+    <div
+      class="modal-backdrop"
+      data-close-modal="true"
+    ></div>
+
+    <section
+      class="modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="entry-modal-title"
+    >
+
+      <div class="modal-header">
+
+        <div>
+          <p class="eyebrow">Καταχώρηση χρόνου</p>
+          <h2 id="entry-modal-title">Νέο task</h2>
+        </div>
+
+        <button
+          id="close-modal-button"
+          class="icon-button"
+          type="button"
+          aria-label="Κλείσιμο"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <input type="hidden" id="entry-id">
+
+      <div class="form-grid">
+
+        <div class="form-group form-group-full">
+          <label for="entry-task-name">Όνομα task</label>
+          <input type="text" id="entry-task-name">
+        </div>
+
+        <div class="form-group">
+          <label for="entry-category">Κατηγορία</label>
+
+          <select id="entry-category">
+            <option value="Εργασία">Εργασία</option>
+            <option value="Project">Project</option>
+            <option value="Προσωπικά">Προσωπικά</option>
+            <option value="Γυμναστική">Γυμναστική</option>
+            <option value="Διάβασμα">Διάβασμα</option>
+            <option value="Σπίτι">Σπίτι</option>
+            <option value="Άλλο">Άλλο</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="entry-date">Ημερομηνία</label>
+          <input type="date" id="entry-date">
+        </div>
+
+        <div class="form-group">
+          <label for="entry-start-time">Ώρα έναρξης</label>
+          <input type="time" id="entry-start-time">
+        </div>
+
+        <div class="form-group">
+          <label for="entry-end-time">Ώρα λήξης</label>
+          <input type="time" id="entry-end-time">
+        </div>
+
+        <div class="form-group form-group-full">
+          <label for="entry-notes">Σημειώσεις</label>
+          <textarea id="entry-notes" rows="3"></textarea>
+        </div>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          id="save-entry-button"
+          class="button button-primary"
+          type="button"
+        >
+          Αποθήκευση
+        </button>
+
+        <button
+          id="cancel-modal-button"
+          class="button button-light"
+          type="button"
+        >
+          Ακύρωση
+        </button>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

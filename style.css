@@ -1,0 +1,263 @@
+.app-navigation {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid var(--border);
+}
+
+.nav-button {
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.nav-button.active {
+  background: var(--primary);
+  color: white;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.summary-item {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: white;
+}
+
+.summary-item p {
+  margin: 0 0 8px;
+  color: var(--muted);
+}
+
+.summary-item strong {
+  font-size: 24px;
+}
+
+.section-heading,
+.assistant-heading,
+.plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.section-heading h2,
+.assistant-heading h2,
+.plan-header h3 {
+  margin: 4px 0 0;
+}
+
+.section-heading-actions {
+  align-items: center;
+}
+
+.section-description {
+  max-width: 650px;
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.assistant-badge {
+  flex-shrink: 0;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.assistant-task-builder {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.assistant-task-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  align-items: end;
+  gap: 12px;
+}
+
+.assistant-add-button {
+  min-width: 110px;
+}
+
+.assistant-task-list,
+.assistant-plan-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.assistant-task-item,
+.assistant-plan-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.assistant-task-item p,
+.assistant-plan-item p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.assistant-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.assistant-message {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+.assistant-message-success {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.assistant-message-warning {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.assistant-message-error {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+#assistant-plan-wrapper {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.assistant-plan-item {
+  grid-template-columns: auto 1fr auto;
+}
+
+.plan-order {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+}
+
+.priority-badge {
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.priority-3 {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.priority-2 {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.priority-1 {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.button-success {
+  background: #059669;
+  color: white;
+}
+
+.full-width-button {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.danger-text {
+  color: var(--danger);
+}
+
+.small-empty {
+  padding: 20px;
+}
+
+@media (max-width: 750px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .assistant-task-row {
+    grid-template-columns: 1fr;
+  }
+
+  .assistant-add-button {
+    width: 100%;
+  }
+
+  .assistant-heading,
+  .plan-header,
+  .section-heading-actions {
+    flex-direction: column;
+  }
+
+  .assistant-actions {
+    flex-direction: column;
+  }
+
+  .assistant-actions .button,
+  .plan-header .button {
+    width: 100%;
+  }
+
+  .assistant-task-item {
+    grid-template-columns: 1fr;
+  }
+
+  .assistant-task-item .entry-action-button {
+    width: 100%;
+  }
+
+  .assistant-plan-item {
+    grid-template-columns: auto 1fr;
+  }
+
+  .assistant-plan-item .priority-badge {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
