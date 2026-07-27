@@ -1,0 +1,229 @@
+/* =========================================================
+   Design tokens — light/dark, spacing, radius, shadow, motion
+   Categorical/sequential/status colors follow the validated
+   reference palette (CVD-safe, contrast-checked).
+========================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* Brand */
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-400: #5b9bf2;
+  --brand-500: #2a78d6;
+  --brand-600: #1c5cab;
+  --brand-700: #184f95;
+  --brand-gradient: linear-gradient(135deg, #2a78d6 0%, #4a3aa7 100%);
+
+  /* Surfaces */
+  --surface-page: #f5f6fa;
+  --surface-card: #ffffff;
+  --surface-card-hover: #fbfbfe;
+  --surface-sunken: #f1f2f7;
+  --surface-overlay: rgba(15, 17, 26, 0.55);
+  --surface-glass: rgba(255, 255, 255, 0.72);
+
+  /* Ink */
+  --text-primary: #0f1222;
+  --text-secondary: #52546b;
+  --text-muted: #6f748f;
+  --text-inverse: #ffffff;
+  --text-on-brand: #ffffff;
+
+  /* Borders */
+  --border-subtle: #e7e8f0;
+  --border-default: #dcded9;
+  --border-strong: rgba(15, 17, 26, 0.14);
+
+  /* Status (fixed — never themed). Text-color steps darkened from the
+     reference values to clear 4.5:1 on their own -bg tint, since these are
+     used as running badge text (not just a colored mark). */
+  --status-good: #0a820a;
+  --status-good-bg: #e9f9e9;
+  --status-warning: #956900;
+  --status-warning-bg: #fff6e0;
+  --status-serious: #b04f2e;
+  --status-serious-bg: #fdece3;
+  --status-critical: #cb3131;
+  --status-critical-bg: #fdecec;
+
+  /* Categorical (chart series, fixed order, never cycled arbitrarily) */
+  --chart-series-1: #2a78d6;
+  --chart-series-2: #eb6834;
+  --chart-series-3: #1baf7a;
+  --chart-series-4: #eda100;
+  --chart-series-5: #e87ba4;
+  --chart-series-6: #008300;
+  --chart-series-7: #4a3aa7;
+  --chart-series-8: #e34948;
+
+  /* Sequential (single hue, blue, light -> dark) for heatmap */
+  --seq-0: #eef2fb;
+  --seq-1: #cde2fb;
+  --seq-2: #86b6ef;
+  --seq-3: #3987e5;
+  --seq-4: #184f95;
+
+  --chart-surface: #fcfcfb;
+  --chart-grid: #e1e0d9;
+  --chart-axis: #c3c2b7;
+  --chart-text-muted: #74726d;
+
+  /* Priority */
+  --priority-critical: #d03b3b;
+  --priority-high: #eb6834;
+  --priority-medium: #eda100;
+  --priority-low: #2a78d6;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgba(15, 17, 26, 0.05);
+  --shadow-sm: 0 2px 6px rgba(15, 17, 26, 0.06), 0 1px 2px rgba(15, 17, 26, 0.05);
+  --shadow-md: 0 8px 24px rgba(15, 17, 26, 0.08), 0 2px 6px rgba(15, 17, 26, 0.05);
+  --shadow-lg: 0 20px 45px rgba(15, 17, 26, 0.14), 0 6px 16px rgba(15, 17, 26, 0.08);
+  --shadow-focus: 0 0 0 3px rgba(42, 120, 214, 0.35);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  --sidebar-width: 248px;
+  --sidebar-width-collapsed: 76px;
+  --topbar-height: 68px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --brand-50: #10203a;
+  --brand-100: #16294a;
+  --brand-400: #6ba4ec;
+  --brand-500: #3987e5;
+  --brand-600: #5b9bf2;
+  --brand-700: #86b6ef;
+  --brand-gradient: linear-gradient(135deg, #3987e5 0%, #9085e9 100%);
+
+  --surface-page: #0c0e16;
+  --surface-card: #141726;
+  --surface-card-hover: #181c2e;
+  --surface-sunken: #0f1220;
+  --surface-overlay: rgba(3, 4, 8, 0.7);
+  --surface-glass: rgba(20, 23, 38, 0.72);
+
+  --text-primary: #f4f5fb;
+  --text-secondary: #c3c5d8;
+  --text-muted: #898da3;
+  --text-inverse: #0f1222;
+  --text-on-brand: #ffffff;
+
+  --border-subtle: #232739;
+  --border-default: #2c2c2a;
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  --status-good: #0ca30c;
+  --status-good-bg: #0f2a12;
+  --status-warning: #fab219;
+  --status-warning-bg: #332405;
+  --status-serious: #ec835a;
+  --status-serious-bg: #33190d;
+  --status-critical: #e66767;
+  --status-critical-bg: #331010;
+
+  --chart-series-1: #3987e5;
+  --chart-series-2: #d95926;
+  --chart-series-3: #199e70;
+  --chart-series-4: #c98500;
+  --chart-series-5: #d55181;
+  --chart-series-6: #1fa31f;
+  --chart-series-7: #9085e9;
+  --chart-series-8: #e66767;
+
+  --seq-0: #16294a;
+  --seq-1: #184f95;
+  --seq-2: #1c5cab;
+  --seq-3: #3987e5;
+  --seq-4: #86b6ef;
+
+  --chart-surface: #1a1a19;
+  --chart-grid: #2c2c2a;
+  --chart-axis: #383835;
+  --chart-text-muted: #898781;
+
+  --priority-critical: #e66767;
+  --priority-high: #d95926;
+  --priority-medium: #c98500;
+  --priority-low: #3987e5;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 24px 50px rgba(0, 0, 0, 0.55);
+  --shadow-focus: 0 0 0 3px rgba(57, 135, 229, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+
+    --brand-50: #10203a;
+    --brand-100: #16294a;
+    --brand-400: #6ba4ec;
+    --brand-500: #3987e5;
+    --brand-600: #5b9bf2;
+    --brand-700: #86b6ef;
+    --brand-gradient: linear-gradient(135deg, #3987e5 0%, #9085e9 100%);
+
+    --surface-page: #0c0e16;
+    --surface-card: #141726;
+    --surface-card-hover: #181c2e;
+    --surface-sunken: #0f1220;
+    --surface-overlay: rgba(3, 4, 8, 0.7);
+    --surface-glass: rgba(20, 23, 38, 0.72);
+
+    --text-primary: #f4f5fb;
+    --text-secondary: #c3c5d8;
+    --text-muted: #898da3;
+    --text-inverse: #0f1222;
+
+    --border-subtle: #232739;
+    --border-default: #2c2c2a;
+    --border-strong: rgba(255, 255, 255, 0.14);
+
+    --chart-series-1: #3987e5;
+    --chart-series-2: #d95926;
+    --chart-series-3: #199e70;
+    --chart-series-4: #c98500;
+    --chart-series-5: #d55181;
+    --chart-series-6: #1fa31f;
+    --chart-series-7: #9085e9;
+    --chart-series-8: #e66767;
+
+    --chart-surface: #1a1a19;
+    --chart-grid: #2c2c2a;
+    --chart-axis: #383835;
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 24px 50px rgba(0, 0, 0, 0.55);
+  }
+}

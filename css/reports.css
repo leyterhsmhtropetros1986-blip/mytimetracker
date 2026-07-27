@@ -1,0 +1,28 @@
+.report-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+#print-report-content {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media print {
+  #print-report-content {
+    display: block;
+  }
+
+  .kpi-tile {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}

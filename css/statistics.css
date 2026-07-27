@@ -1,0 +1,20 @@
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-3);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.heatmap-legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+#stats-heatmap {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}

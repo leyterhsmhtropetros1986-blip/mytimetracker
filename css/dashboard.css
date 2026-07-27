@@ -1,0 +1,125 @@
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.kpi-tile {
+  position: relative;
+  padding: var(--space-5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+  transition: box-shadow var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard);
+}
+
+.kpi-tile:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.kpi-tile-accent {
+  background: var(--brand-gradient);
+  border-color: transparent;
+  color: white;
+}
+
+.kpi-tile-accent .kpi-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.kpi-label {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--text-muted);
+}
+
+.kpi-value {
+  display: block;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-value-text {
+  font-size: 18px;
+  font-variant-numeric: normal;
+}
+
+.kpi-sub {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.kpi-tile-accent .kpi-sub {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.kpi-trend {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+}
+
+.dashboard-chart-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+.dashboard-chart-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-chart-card-narrow {
+  min-width: 0;
+}
+
+.recent-activity-list {
+  display: grid;
+  gap: 10px;
+}
+
+.recent-activity-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.recent-activity-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.recent-activity-title {
+  font-weight: 650;
+  font-size: 13px;
+}
+
+.recent-activity-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.recent-activity-duration {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  white-space: nowrap;
+}

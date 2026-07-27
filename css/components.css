@@ -1,0 +1,575 @@
+/* =========================================================
+   Cards
+========================================================= */
+
+.card {
+  padding: var(--space-6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-default);
+}
+
+.card h2,
+.card h3 {
+  margin-top: 0;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.section-heading h2 {
+  margin: 4px 0 0;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+
+.section-heading-actions {
+  align-items: center;
+}
+
+.section-description {
+  max-width: 640px;
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* =========================================================
+   Buttons
+========================================================= */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 650;
+  font-size: 14px;
+  letter-spacing: -0.005em;
+  transition: transform var(--duration-fast) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard),
+    background-color var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard);
+  white-space: nowrap;
+}
+
+.button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
+.button.is-loading {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.button-primary {
+  background: var(--brand-gradient);
+  color: var(--text-on-brand);
+  box-shadow: 0 6px 16px rgba(42, 120, 214, 0.28);
+}
+
+.button-primary:hover:not(:disabled) {
+  box-shadow: 0 10px 22px rgba(42, 120, 214, 0.36);
+  transform: translateY(-1px);
+}
+
+.button-danger {
+  background: var(--status-critical);
+  color: white;
+}
+
+.button-success {
+  background: var(--status-good);
+  color: white;
+}
+
+.button-light {
+  border: 1px solid var(--border-default);
+  background: var(--surface-card);
+  color: var(--text-primary);
+}
+
+.button-light:hover:not(:disabled) {
+  background: var(--surface-sunken);
+}
+
+.button-sm {
+  min-height: 34px;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+}
+
+.danger-text {
+  color: var(--status-critical);
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  transition: background-color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+}
+
+.icon-button:hover {
+  background: var(--surface-sunken);
+}
+
+.icon-button:active {
+  transform: scale(0.94);
+}
+
+/* =========================================================
+   Badges & pills
+========================================================= */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-category {
+  background: var(--brand-50);
+  color: var(--brand-600);
+}
+
+.badge-status {
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+}
+
+.badge-status-scheduled {
+  background: var(--brand-50);
+  color: var(--brand-600);
+}
+
+.badge-status-in_progress {
+  background: var(--status-warning-bg);
+  color: var(--status-warning);
+}
+
+.badge-status-done {
+  background: var(--status-good-bg);
+  color: var(--status-good);
+}
+
+.badge-status-delayed {
+  background: var(--status-serious-bg);
+  color: var(--status-serious);
+}
+
+.badge-status-cancelled {
+  background: var(--status-critical-bg);
+  color: var(--status-critical);
+}
+
+.badge-priority {
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.badge-priority-critical {
+  background: var(--status-critical-bg);
+  color: var(--priority-critical);
+}
+
+.badge-priority-high {
+  background: #fdf0e7;
+  /* Δεν χρησιμοποιεί το μοιρασμένο --priority-high (είναι tuned και για charts) —
+     πιο σκούρα απόχρωση εδώ ειδικά για να περνάει 4.5:1 ως κείμενο badge. */
+  color: #c04413;
+}
+
+.badge-priority-medium {
+  background: var(--status-warning-bg);
+  color: var(--priority-medium);
+}
+
+.badge-priority-low {
+  background: var(--brand-50);
+  color: var(--priority-low);
+}
+
+:root[data-theme="dark"] .badge-priority-high {
+  background: #331e0d;
+  color: #dc6637;
+}
+
+.badge-tag {
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+/* =========================================================
+   Empty / loading states
+========================================================= */
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-4);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 34px;
+  opacity: 0.8;
+}
+
+.small-empty {
+  padding: var(--space-5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   Toast
+========================================================= */
+
+.toast-container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1200;
+  display: grid;
+  gap: 10px;
+  width: min(380px, calc(100% - 32px));
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--text-primary);
+  color: var(--surface-card);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  transition: opacity var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.toast-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.toast-success {
+  background: #0c3a17;
+}
+
+.toast-error {
+  background: #3a0f0f;
+}
+
+.toast-warning {
+  background: #3a2a05;
+}
+
+.toast-info {
+  background: var(--text-primary);
+}
+
+/* =========================================================
+   Tooltip (charts + generic)
+========================================================= */
+
+.chart-tooltip {
+  position: fixed;
+  z-index: 1300;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--text-primary);
+  color: var(--surface-card);
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+  max-width: 220px;
+}
+
+/* =========================================================
+   Modal (γενικό)
+========================================================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-overlay);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: modal-fade-in var(--duration-base) var(--ease-standard);
+}
+
+.modal-content {
+  position: relative;
+  z-index: 1;
+  width: min(680px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lg);
+  animation: modal-pop-in var(--duration-base) var(--ease-standard);
+}
+
+.modal-content-small {
+  width: min(440px, 100%);
+}
+
+.modal-content-wide {
+  width: min(880px, 100%);
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.modal-header h2 {
+  margin: 4px 0 0;
+  font-size: 19px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+#confirm-modal-message {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* =========================================================
+   Charts (shared chrome)
+========================================================= */
+
+.chart-svg {
+  width: 100%;
+  height: auto;
+}
+
+.chart-gridline {
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+}
+
+.chart-axis-label {
+  fill: var(--chart-text-muted);
+  font-size: 10px;
+}
+
+.chart-bar {
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.chart-bar:hover,
+.chart-bar:focus-visible {
+  opacity: 0.82;
+}
+
+.chart-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-area {
+  opacity: 0.1;
+}
+
+.chart-dot {
+  cursor: pointer;
+  stroke: var(--surface-card);
+  stroke-width: 2;
+}
+
+.chart-donut-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.chart-donut {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.chart-donut-segment {
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.chart-donut-segment:hover,
+.chart-donut-segment:focus-visible {
+  opacity: 0.85;
+}
+
+.chart-donut-total {
+  fill: var(--text-primary);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.chart-donut-total-label {
+  fill: var(--text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.chart-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.chart-legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.chart-heatmap-cell {
+  cursor: pointer;
+  fill: var(--seq-0);
+}
+
+.chart-heatmap-step-1 {
+  fill: var(--seq-1);
+}
+
+.chart-heatmap-step-2 {
+  fill: var(--seq-2);
+}
+
+.chart-heatmap-step-3 {
+  fill: var(--seq-3);
+}
+
+.chart-heatmap-step-4 {
+  fill: var(--seq-4);
+}
+
+.chart-empty {
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.chart-sparkline {
+  width: 100px;
+  height: 28px;
+  display: block;
+}
+
+.chart-sparkline-path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
