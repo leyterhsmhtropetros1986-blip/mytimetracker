@@ -129,13 +129,13 @@ export function render() {
   elements.weekHours.textContent = formatDuration(state.calculateEntriesTotal(weekEntries));
   elements.monthHours.textContent = formatDuration(state.calculateEntriesTotal(monthEntries));
 
-  const preferences = state.getPreferences();
+  const weeklyTargetMinutes = state.getWeeklyTargetMinutes();
   const weekSeconds = state.calculateEntriesTotal(weekEntries);
-  const remainingSeconds = preferences.weeklyTargetMinutes * 60 - weekSeconds;
+  const remainingSeconds = weeklyTargetMinutes * 60 - weekSeconds;
 
   if (remainingSeconds > 0) {
     elements.remainingTarget.textContent = formatDuration(remainingSeconds);
-    elements.remainingTargetSub.textContent = `από στόχο ${preferences.weeklyTargetMinutes / 60}ω/εβδομάδα`;
+    elements.remainingTargetSub.textContent = `από ωράριο ${(weeklyTargetMinutes / 60).toFixed(1).replace(/\.0$/, "")}ω/εβδομάδα`;
   } else {
     elements.remainingTarget.textContent = `+${formatDuration(-remainingSeconds)}`;
     elements.remainingTargetSub.textContent = "πάνω από τον στόχο 🎉";

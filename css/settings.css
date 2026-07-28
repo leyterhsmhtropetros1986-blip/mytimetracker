@@ -112,6 +112,68 @@
   line-height: 1.6;
 }
 
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: var(--space-4);
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.schedule-row:focus-within {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px var(--brand-100);
+}
+
+.schedule-row label {
+  font-weight: 650;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.schedule-row input {
+  width: 64px;
+  min-height: 36px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+  text-align: center;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.schedule-row input:focus {
+  outline: none;
+  border-color: var(--brand-500);
+}
+
+.schedule-total {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--brand-50);
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.schedule-total strong {
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
 .shortcut-list {
   display: grid;
   gap: 8px;

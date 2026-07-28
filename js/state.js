@@ -480,6 +480,10 @@ export function setPreferences(partialPreferences) {
   emitChange();
 }
 
+export function getWeeklyTargetMinutes() {
+  return Object.values(state.preferences.weeklySchedule).reduce((total, minutes) => total + minutes, 0);
+}
+
 /* =========================
    Δεδομένα / εφεδρικό αντίγραφο (Ρυθμίσεις)
 ========================= */

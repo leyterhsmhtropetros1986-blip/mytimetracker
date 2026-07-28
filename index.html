@@ -887,11 +887,51 @@
           </article>
 
           <article class="card">
-            <div class="section-heading"><div><p class="eyebrow">Στόχοι</p><h2>Εβδομαδιαίος στόχος</h2></div></div>
+            <div class="section-heading"><div><p class="eyebrow">Στόχοι</p><h2>Το ωράριό μου</h2></div></div>
 
-            <div class="form-group">
-              <label for="settings-weekly-target-input">Ώρες / εβδομάδα</label>
-              <input type="number" id="settings-weekly-target-input" min="1" max="168" step="1">
+            <p class="section-description">
+              Ορίστε ελεύθερα πόσες ώρες δουλεύετε κάθε ημέρα — το άθροισμα γίνεται αυτόματα ο εβδομαδιαίος σας στόχος.
+            </p>
+
+            <div class="schedule-grid">
+              <div class="schedule-row">
+                <label for="schedule-mon">Δευτέρα</label>
+                <input type="number" id="schedule-mon" data-day="mon" min="0" max="24" step="0.5">
+              </div>
+
+              <div class="schedule-row">
+                <label for="schedule-tue">Τρίτη</label>
+                <input type="number" id="schedule-tue" data-day="tue" min="0" max="24" step="0.5">
+              </div>
+
+              <div class="schedule-row">
+                <label for="schedule-wed">Τετάρτη</label>
+                <input type="number" id="schedule-wed" data-day="wed" min="0" max="24" step="0.5">
+              </div>
+
+              <div class="schedule-row">
+                <label for="schedule-thu">Πέμπτη</label>
+                <input type="number" id="schedule-thu" data-day="thu" min="0" max="24" step="0.5">
+              </div>
+
+              <div class="schedule-row">
+                <label for="schedule-fri">Παρασκευή</label>
+                <input type="number" id="schedule-fri" data-day="fri" min="0" max="24" step="0.5">
+              </div>
+
+              <div class="schedule-row">
+                <label for="schedule-sat">Σάββατο</label>
+                <input type="number" id="schedule-sat" data-day="sat" min="0" max="24" step="0.5">
+              </div>
+
+              <div class="schedule-row">
+                <label for="schedule-sun">Κυριακή</label>
+                <input type="number" id="schedule-sun" data-day="sun" min="0" max="24" step="0.5">
+              </div>
+            </div>
+
+            <div class="schedule-total">
+              Σύνολο εβδομάδας: <strong id="schedule-total-hours">0</strong> ώρες
             </div>
 
             <div class="toggle-row" style="margin-top:16px;">

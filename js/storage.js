@@ -262,20 +262,40 @@ function normalizeCategories(rawCategories) {
   return deduped;
 }
 
+const WEEKDAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+
 const DEFAULT_PREFERENCES = {
-  weeklyTargetMinutes: 40 * 60,
+  weeklySchedule: { mon: 480, tue: 480, wed: 480, thu: 480, fri: 480, sat: 0, sun: 0 },
   reminderNotificationsEnabled: true
 };
 
+function normalizeWeeklySchedule(rawSchedule, legacyWeeklyTargetMinutes) {
+  if (rawSchedule && typeof rawSchedule === "object") {
+    const schedule = {};
+
+    WEEKDAY_KEYS.forEach((day) => {
+      const minutes = Number(rawSchedule[day]);
+      schedule[day] = Number.isFinite(minutes) && minutes >= 0 ? Math.round(minutes) : 0;
+    });
+
+    return schedule;
+  }
+
+  const legacyMinutes = Number(legacyWeeklyTargetMinutes);
+
+  if (Number.isFinite(legacyMinutes) && legacyMinutes > 0) {
+    const perWeekday = Math.round(legacyMinutes / 5);
+    return { mon: perWeekday, tue: perWeekday, wed: perWeekday, thu: perWeekday, fri: perWeekday, sat: 0, sun: 0 };
+  }
+
+  return { ...DEFAULT_PREFERENCES.weeklySchedule };
+}
+
 function normalizePreferences(rawPreferences) {
   const value = rawPreferences && typeof rawPreferences === "object" ? rawPreferences : {};
-  const weeklyTargetMinutes = Number(value.weeklyTargetMinutes);
 
   return {
-    weeklyTargetMinutes:
-      Number.isFinite(weeklyTargetMinutes) && weeklyTargetMinutes > 0
-        ? Math.round(weeklyTargetMinutes)
-        : DEFAULT_PREFERENCES.weeklyTargetMinutes,
+    weeklySchedule: normalizeWeeklySchedule(value.weeklySchedule, value.weeklyTargetMinutes),
     reminderNotificationsEnabled:
       typeof value.reminderNotificationsEnabled === "boolean"
         ? value.reminderNotificationsEnabled

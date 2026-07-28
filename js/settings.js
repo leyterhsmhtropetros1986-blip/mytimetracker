@@ -5,8 +5,11 @@ import * as ui from "./ui.js";
 import * as theme from "./theme.js";
 import * as categories from "./categories.js";
 
+const WEEKDAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+
 let themeToggle;
-let weeklyTargetInput;
+let scheduleInputs = {};
+let scheduleTotalElement;
 let remindersToggle;
 let exportDataButton;
 let importDataButton;
@@ -17,7 +20,12 @@ export function init() {
   categories.init();
 
   themeToggle = document.getElementById("settings-theme-toggle");
-  weeklyTargetInput = document.getElementById("settings-weekly-target-input");
+
+  WEEKDAY_KEYS.forEach((day) => {
+    scheduleInputs[day] = document.getElementById(`schedule-${day}`);
+  });
+
+  scheduleTotalElement = document.getElementById("schedule-total-hours");
   remindersToggle = document.getElementById("settings-reminders-toggle");
   exportDataButton = document.getElementById("settings-export-data-button");
   importDataButton = document.getElementById("settings-import-data-button");
@@ -30,17 +38,8 @@ export function init() {
     theme.toggleTheme();
   });
 
-  weeklyTargetInput.addEventListener("change", () => {
-    const hours = Number(weeklyTargetInput.value);
-
-    if (!Number.isFinite(hours) || hours <= 0) {
-      ui.toast("Συμπλήρωσε έγκυρο αριθμό ωρών.", "error");
-      weeklyTargetInput.value = String(state.getPreferences().weeklyTargetMinutes / 60);
-      return;
-    }
-
-    state.setPreferences({ weeklyTargetMinutes: Math.round(hours * 60) });
-    ui.toast("Ο στόχος ενημερώθηκε.", "success");
+  WEEKDAY_KEYS.forEach((day) => {
+    scheduleInputs[day].addEventListener("change", () => handleScheduleChange(day));
   });
 
   remindersToggle.addEventListener("change", () => {
@@ -54,6 +53,21 @@ export function init() {
   importDataInput.addEventListener("change", handleImportFile);
 
   resetDataButton.addEventListener("click", handleResetData);
+}
+
+function handleScheduleChange(day) {
+  const input = scheduleInputs[day];
+  const hours = Number(input.value);
+
+  if (!Number.isFinite(hours) || hours < 0) {
+    ui.toast("Συμπλήρωσε έγκυρο αριθμό ωρών.", "error");
+    input.value = String(state.getPreferences().weeklySchedule[day] / 60);
+    return;
+  }
+
+  const weeklySchedule = { ...state.getPreferences().weeklySchedule, [day]: Math.round(hours * 60) };
+  state.setPreferences({ weeklySchedule });
+  ui.toast("Το ωράριο ενημερώθηκε.", "success");
 }
 
 function todayFileDateKey() {
@@ -130,7 +144,14 @@ export function render() {
   themeToggle.checked = theme.getTheme() === "dark";
 
   const preferences = state.getPreferences();
-  weeklyTargetInput.value = String(preferences.weeklyTargetMinutes / 60);
+
+  WEEKDAY_KEYS.forEach((day) => {
+    if (document.activeElement !== scheduleInputs[day]) {
+      scheduleInputs[day].value = String(preferences.weeklySchedule[day] / 60);
+    }
+  });
+
+  scheduleTotalElement.textContent = String(state.getWeeklyTargetMinutes() / 60);
   remindersToggle.checked = preferences.reminderNotificationsEnabled;
 
   categories.render();
