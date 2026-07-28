@@ -55,6 +55,91 @@
 
   <a class="skip-link" href="#main-content">Μετάβαση στο περιεχόμενο</a>
 
+  <!-- Sprite: μονόχρωμα SVG εικονίδια πλοήγησης (fill/stroke ελέγχονται από CSS currentColor) -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="icon-dashboard" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+      <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+      <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+    </symbol>
+
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+      <line x1="8" y1="3" x2="8" y2="7"></line>
+      <line x1="16" y1="3" x2="16" y2="7"></line>
+    </symbol>
+
+    <symbol id="icon-timeline" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"></circle>
+      <polyline points="12 7 12 12 16 14"></polyline>
+    </symbol>
+
+    <symbol id="icon-tasks" viewBox="0 0 24 24">
+      <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+      <polyline points="8 12 11 15 16 9"></polyline>
+    </symbol>
+
+    <symbol id="icon-reports" viewBox="0 0 24 24">
+      <polygon points="6,3 15,3 19,7 19,21 6,21"></polygon>
+      <polyline points="15 3 15 7 19 7"></polyline>
+      <line x1="8.5" y1="12" x2="16" y2="12"></line>
+      <line x1="8.5" y1="16" x2="16" y2="16"></line>
+    </symbol>
+
+    <symbol id="icon-statistics" viewBox="0 0 24 24">
+      <line x1="4" y1="20" x2="20" y2="20"></line>
+      <rect x="6" y="14" width="3" height="6"></rect>
+      <rect x="11" y="9" width="3" height="11"></rect>
+      <rect x="16" y="5" width="3" height="15"></rect>
+    </symbol>
+
+    <symbol id="icon-assistant" viewBox="0 0 24 24">
+      <polygon points="12,3 13.8,8.2 19,10 13.8,11.8 12,17 10.2,11.8 5,10 10.2,8.2"></polygon>
+    </symbol>
+
+    <symbol id="icon-settings" viewBox="0 0 24 24">
+      <line x1="4" y1="6" x2="20" y2="6"></line>
+      <circle cx="9" cy="6" r="2"></circle>
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <circle cx="15" cy="12" r="2"></circle>
+      <line x1="4" y1="18" x2="20" y2="18"></line>
+      <circle cx="7" cy="18" r="2"></circle>
+    </symbol>
+
+    <symbol id="icon-support" viewBox="0 0 24 24">
+      <rect x="3" y="4" width="18" height="13" rx="2.5"></rect>
+      <polygon points="8,17 8,21 12,17"></polygon>
+    </symbol>
+
+    <symbol id="icon-guide" viewBox="0 0 24 24">
+      <circle cx="12" cy="10" r="6"></circle>
+      <line x1="12" y1="4" x2="12" y2="2.5"></line>
+      <line x1="10" y1="18" x2="14" y2="18"></line>
+      <line x1="10" y1="21" x2="14" y2="21"></line>
+    </symbol>
+
+    <symbol id="icon-download" viewBox="0 0 24 24">
+      <line x1="12" y1="3" x2="12" y2="14"></line>
+      <polyline points="7 10 12 15 17 10"></polyline>
+      <line x1="4" y1="19" x2="20" y2="19"></line>
+    </symbol>
+
+    <symbol id="icon-play" viewBox="0 0 24 24">
+      <polygon points="6,4 20,12 6,20"></polygon>
+    </symbol>
+
+    <symbol id="icon-pause" viewBox="0 0 24 24">
+      <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+      <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+    </symbol>
+
+    <symbol id="icon-stop" viewBox="0 0 24 24">
+      <rect x="5" y="5" width="14" height="14" rx="2"></rect>
+    </symbol>
+  </svg>
+
   <div class="app-shell" id="app-shell">
 
     <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
@@ -69,54 +154,54 @@
       <nav class="sidebar-nav" aria-label="Κύρια πλοήγηση">
 
         <button type="button" class="sidebar-link" data-route="dashboard">
-          <span class="sidebar-link-icon" aria-hidden="true">🏠</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-dashboard"></use></svg>
           <span class="sidebar-link-label">Πίνακας Ελέγχου</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="calendar">
-          <span class="sidebar-link-icon" aria-hidden="true">📅</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-calendar"></use></svg>
           <span class="sidebar-link-label">Ημερολόγιο</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="timeline">
-          <span class="sidebar-link-icon" aria-hidden="true">🧭</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-timeline"></use></svg>
           <span class="sidebar-link-label">Χρονογραμμή</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="tasks">
-          <span class="sidebar-link-icon" aria-hidden="true">✅</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-tasks"></use></svg>
           <span class="sidebar-link-label">Εργασίες</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="reports">
-          <span class="sidebar-link-icon" aria-hidden="true">📄</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-reports"></use></svg>
           <span class="sidebar-link-label">Αναφορές</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="statistics">
-          <span class="sidebar-link-icon" aria-hidden="true">📊</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-statistics"></use></svg>
           <span class="sidebar-link-label">Στατιστικά</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="assistant">
-          <span class="sidebar-link-icon" aria-hidden="true">✨</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-assistant"></use></svg>
           <span class="sidebar-link-label">AI Βοηθός</span>
         </button>
 
         <span class="sidebar-section-label">Λοιπά</span>
 
         <button type="button" class="sidebar-link" data-route="settings">
-          <span class="sidebar-link-icon" aria-hidden="true">⚙️</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-settings"></use></svg>
           <span class="sidebar-link-label">Ρυθμίσεις</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="support">
-          <span class="sidebar-link-icon" aria-hidden="true">💬</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-support"></use></svg>
           <span class="sidebar-link-label">Υποστήριξη</span>
         </button>
 
         <button type="button" id="sidebar-guide-button" class="sidebar-link">
-          <span class="sidebar-link-icon" aria-hidden="true">💡</span>
+          <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-guide"></use></svg>
           <span class="sidebar-link-label">Οδηγίες</span>
         </button>
 
@@ -160,6 +245,10 @@
           <div id="global-search-results" class="popover-panel" hidden></div>
         </div>
 
+        <button type="button" class="topbar-cta-button" id="toolbar-new-entry-button">
+          + Νέο task
+        </button>
+
         <div class="topbar-actions">
 
           <button type="button" id="theme-toggle-button" class="icon-button" aria-pressed="false" aria-label="Εναλλαγή θέματος">
@@ -195,15 +284,15 @@
               <div class="popover-header">Ο χώρος μου</div>
 
               <button type="button" class="avatar-menu-item" data-route="settings">
-                <span aria-hidden="true">⚙️</span> Ρυθμίσεις
+                <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-settings"></use></svg> Ρυθμίσεις
               </button>
 
               <button type="button" class="avatar-menu-item" data-route="support">
-                <span aria-hidden="true">💬</span> Υποστήριξη
+                <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-support"></use></svg> Υποστήριξη
               </button>
 
               <button type="button" id="avatar-export-data-button" class="avatar-menu-item">
-                <span aria-hidden="true">⬇️</span> Εξαγωγή δεδομένων (JSON)
+                <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-download"></use></svg> Εξαγωγή δεδομένων (JSON)
               </button>
             </div>
           </div>
@@ -215,18 +304,6 @@
       <div class="content-toolbar" id="content-toolbar">
 
         <p class="content-toolbar-context" id="content-toolbar-context"></p>
-
-        <div class="content-toolbar-actions">
-          <button
-            type="button"
-            class="button button-primary button-sm"
-            id="toolbar-new-entry-button"
-            data-toolbar-for="calendar,timeline,tasks"
-            hidden
-          >
-            + Νέο task
-          </button>
-        </div>
 
       </div>
 
@@ -249,9 +326,15 @@
         <div class="quick-timer-display" id="timer-display">00:00:00</div>
 
         <div class="quick-timer-actions">
-          <button type="button" id="start-button" class="icon-button" aria-label="Έναρξη χρονομέτρου">▶️</button>
-          <button type="button" id="pause-button" class="icon-button" aria-label="Παύση χρονομέτρου" disabled>⏸️</button>
-          <button type="button" id="stop-button" class="icon-button" aria-label="Τέλος και αποθήκευση" disabled>⏹️</button>
+          <button type="button" id="start-button" class="icon-button quick-timer-play" aria-label="Έναρξη χρονομέτρου">
+            <svg class="timer-icon" aria-hidden="true"><use href="#icon-play"></use></svg>
+          </button>
+          <button type="button" id="pause-button" class="icon-button" aria-label="Παύση χρονομέτρου" disabled>
+            <svg class="timer-icon" aria-hidden="true"><use href="#icon-pause"></use></svg>
+          </button>
+          <button type="button" id="stop-button" class="icon-button" aria-label="Τέλος και αποθήκευση" disabled>
+            <svg class="timer-icon" aria-hidden="true"><use href="#icon-stop"></use></svg>
+          </button>
         </div>
 
       </div>
@@ -261,9 +344,9 @@
         <!-- ============ DASHBOARD ============ -->
         <section class="page" data-page="dashboard" id="page-dashboard">
 
-          <div class="kpi-grid" id="kpi-grid">
+          <div class="kpi-grid kpi-grid-primary" id="kpi-grid">
 
-            <article class="kpi-tile kpi-tile-accent">
+            <article class="kpi-tile">
               <div class="kpi-tile-header">
                 <span class="kpi-icon" data-accent="dashboard" aria-hidden="true">🔥</span>
                 <p class="kpi-label">Ώρες σήμερα</p>
@@ -283,23 +366,6 @@
 
             <article class="kpi-tile">
               <div class="kpi-tile-header">
-                <span class="kpi-icon" data-accent="timeline" aria-hidden="true">🗓️</span>
-                <p class="kpi-label">Ώρες μήνα</p>
-              </div>
-              <strong class="kpi-value" id="kpi-month-hours">00:00:00</strong>
-            </article>
-
-            <article class="kpi-tile">
-              <div class="kpi-tile-header">
-                <span class="kpi-icon" data-accent="reports" aria-hidden="true">🎯</span>
-                <p class="kpi-label">Απόσταση από στόχο</p>
-              </div>
-              <strong class="kpi-value" id="kpi-remaining-target">00:00:00</strong>
-              <p class="kpi-sub" id="kpi-remaining-target-sub"></p>
-            </article>
-
-            <article class="kpi-tile">
-              <div class="kpi-tile-header">
                 <span class="kpi-icon" data-accent="tasks" aria-hidden="true">✅</span>
                 <p class="kpi-label">Ολοκληρωμένα tasks</p>
               </div>
@@ -308,57 +374,75 @@
 
             <article class="kpi-tile">
               <div class="kpi-tile-header">
-                <span class="kpi-icon" data-accent="statistics" aria-hidden="true">⏳</span>
-                <p class="kpi-label">Εκκρεμή tasks</p>
-              </div>
-              <strong class="kpi-value" id="kpi-pending-tasks">0</strong>
-            </article>
-
-            <article class="kpi-tile">
-              <div class="kpi-tile-header">
-                <span class="kpi-icon" data-accent="support" aria-hidden="true">🏆</span>
-                <p class="kpi-label">Πιο παραγωγική κατηγορία</p>
-              </div>
-              <strong class="kpi-value kpi-value-text" id="kpi-top-category">—</strong>
-            </article>
-
-            <article class="kpi-tile">
-              <div class="kpi-tile-header">
                 <span class="kpi-icon" data-accent="assistant" aria-hidden="true">⚡</span>
                 <p class="kpi-label">Δείκτης παραγωγικότητας</p>
               </div>
               <strong class="kpi-value" id="kpi-productivity-score">0%</strong>
-              <div class="kpi-trend" id="kpi-productivity-trend"></div>
-            </article>
-
-            <article class="kpi-tile">
-              <div class="kpi-tile-header">
-                <span class="kpi-icon" data-accent="calendar" aria-hidden="true">⏱️</span>
-                <p class="kpi-label">Μέση διάρκεια task</p>
-              </div>
-              <strong class="kpi-value" id="kpi-avg-duration">00:00:00</strong>
-            </article>
-
-            <article class="kpi-tile">
-              <div class="kpi-tile-header">
-                <span class="kpi-icon" data-accent="tasks" aria-hidden="true">🌟</span>
-                <p class="kpi-label">Συνεχόμενες ημέρες</p>
-              </div>
-              <strong class="kpi-value" id="kpi-streak">0 ημέρες</strong>
-            </article>
-
-            <article class="kpi-tile">
-              <div class="kpi-tile-header">
-                <span class="kpi-icon" data-accent="assistant" aria-hidden="true">🧠</span>
-                <p class="kpi-label">Focus score</p>
-              </div>
-              <strong class="kpi-value" id="kpi-focus-score">0%</strong>
-              <p class="kpi-sub">λιγότερα, μεγαλύτερα blocks</p>
             </article>
 
           </div>
 
-          <div class="dashboard-chart-row">
+          <div class="kpi-secondary-strip" id="kpi-secondary-strip">
+
+            <div class="kpi-secondary-item">
+              <span class="kpi-icon kpi-secondary-icon" data-accent="timeline" aria-hidden="true">🗓️</span>
+              <div class="kpi-secondary-text">
+                <p class="kpi-secondary-label">Ώρες μήνα</p>
+                <strong class="kpi-secondary-value" id="kpi-month-hours">00:00:00</strong>
+              </div>
+            </div>
+
+            <div class="kpi-secondary-item">
+              <span class="kpi-icon kpi-secondary-icon" data-accent="reports" aria-hidden="true">🎯</span>
+              <div class="kpi-secondary-text">
+                <p class="kpi-secondary-label">Απόσταση από στόχο</p>
+                <strong class="kpi-secondary-value" id="kpi-remaining-target">00:00:00</strong>
+              </div>
+            </div>
+
+            <div class="kpi-secondary-item">
+              <span class="kpi-icon kpi-secondary-icon" data-accent="statistics" aria-hidden="true">⏳</span>
+              <div class="kpi-secondary-text">
+                <p class="kpi-secondary-label">Εκκρεμή tasks</p>
+                <strong class="kpi-secondary-value" id="kpi-pending-tasks">0</strong>
+              </div>
+            </div>
+
+            <div class="kpi-secondary-item">
+              <span class="kpi-icon kpi-secondary-icon" data-accent="support" aria-hidden="true">🏆</span>
+              <div class="kpi-secondary-text">
+                <p class="kpi-secondary-label">Πιο παραγωγική κατηγορία</p>
+                <strong class="kpi-secondary-value kpi-secondary-value-text" id="kpi-top-category">—</strong>
+              </div>
+            </div>
+
+            <div class="kpi-secondary-item">
+              <span class="kpi-icon kpi-secondary-icon" data-accent="calendar" aria-hidden="true">⏱️</span>
+              <div class="kpi-secondary-text">
+                <p class="kpi-secondary-label">Μέση διάρκεια task</p>
+                <strong class="kpi-secondary-value" id="kpi-avg-duration">00:00:00</strong>
+              </div>
+            </div>
+
+            <div class="kpi-secondary-item">
+              <span class="kpi-icon kpi-secondary-icon" data-accent="tasks" aria-hidden="true">🌟</span>
+              <div class="kpi-secondary-text">
+                <p class="kpi-secondary-label">Συνεχόμενες ημέρες</p>
+                <strong class="kpi-secondary-value" id="kpi-streak">0 ημέρες</strong>
+              </div>
+            </div>
+
+            <div class="kpi-secondary-item">
+              <span class="kpi-icon kpi-secondary-icon" data-accent="assistant" aria-hidden="true">🧠</span>
+              <div class="kpi-secondary-text">
+                <p class="kpi-secondary-label">Focus score</p>
+                <strong class="kpi-secondary-value" id="kpi-focus-score">0%</strong>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="dashboard-chart-row dashboard-chart-row-hero">
             <article class="card dashboard-chart-card">
               <div class="section-heading"><h2>Ώρες ανά ημέρα (7 ημέρες)</h2></div>
               <div id="dashboard-chart-weekly-hours"></div>
@@ -370,30 +454,33 @@
             </article>
           </div>
 
-          <article class="card">
-            <div class="section-heading"><h2>Μηνιαία τάση (6 μήνες)</h2></div>
-            <div id="dashboard-chart-monthly-trend"></div>
-          </article>
+          <div class="dashboard-lower-grid">
 
-          <div class="dashboard-chart-row">
-            <article class="card dashboard-chart-card">
-              <div class="section-heading"><h2>Ώρες ανά ημέρα εβδομάδας (μήνας)</h2></div>
-              <div id="dashboard-chart-weekday"></div>
+            <article class="card">
+              <div class="section-heading"><h2>Σημερινά tasks</h2></div>
+              <div id="dashboard-today-tasks" class="dashboard-today-tasks-list"></div>
+              <div id="dashboard-today-tasks-empty" class="empty-state small-empty">
+                <span class="empty-state-icon" aria-hidden="true">🗒️</span>
+                Δεν έχεις tasks για σήμερα.
+                <button type="button" class="button button-primary button-sm dashboard-empty-cta" id="dashboard-today-empty-cta">+ Νέα καταχώρηση</button>
+              </div>
             </article>
 
-            <article class="card dashboard-chart-card">
-              <div class="section-heading"><h2>Τάση παραγωγικότητας (14 ημέρες)</h2></div>
-              <div id="dashboard-chart-productivity-trend"></div>
+            <article class="card">
+              <div class="section-heading"><h2>Πρόσφατη δραστηριότητα</h2></div>
+              <div id="dashboard-recent-activity" class="recent-activity-list"></div>
+              <div id="dashboard-recent-empty" class="empty-state small-empty">
+                <span class="empty-state-icon" aria-hidden="true">🗂️</span>
+                Δεν υπάρχει ακόμα δραστηριότητα.
+                <button type="button" class="button button-primary button-sm dashboard-empty-cta" id="dashboard-recent-empty-cta">+ Νέα καταχώρηση</button>
+              </div>
             </article>
+
           </div>
 
-          <article class="card">
-            <div class="section-heading"><h2>Πρόσφατη δραστηριότητα</h2></div>
-            <div id="dashboard-recent-activity" class="recent-activity-list"></div>
-            <div id="dashboard-recent-empty" class="empty-state small-empty">
-              <span class="empty-state-icon" aria-hidden="true">🗂️</span>
-              Δεν υπάρχει ακόμα δραστηριότητα.
-            </div>
+          <article class="card dashboard-ai-insight">
+            <div class="section-heading"><h2>✨ Πρόταση AI Βοηθού</h2></div>
+            <div id="dashboard-ai-insight-body"></div>
           </article>
 
         </section>
@@ -1030,19 +1117,19 @@
   <nav class="mobile-bottom-nav" aria-label="Πλοήγηση κινητού">
     <div class="mobile-bottom-nav-list">
       <button type="button" class="mobile-bottom-nav-link" data-route="dashboard">
-        <span class="sidebar-link-icon" aria-hidden="true">🏠</span>Αρχική
+        <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-dashboard"></use></svg>Αρχική
       </button>
       <button type="button" class="mobile-bottom-nav-link" data-route="calendar">
-        <span class="sidebar-link-icon" aria-hidden="true">📅</span>Ημ/νιο
+        <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-calendar"></use></svg>Ημ/νιο
       </button>
       <button type="button" class="mobile-bottom-nav-link" data-route="tasks">
-        <span class="sidebar-link-icon" aria-hidden="true">✅</span>Εργασίες
+        <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-tasks"></use></svg>Εργασίες
       </button>
       <button type="button" class="mobile-bottom-nav-link" data-route="statistics">
-        <span class="sidebar-link-icon" aria-hidden="true">📊</span>Στατ.
+        <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-statistics"></use></svg>Στατ.
       </button>
       <button type="button" class="mobile-bottom-nav-link" data-route="settings">
-        <span class="sidebar-link-icon" aria-hidden="true">⚙️</span>Ρυθμίσεις
+        <svg class="sidebar-link-icon" aria-hidden="true"><use href="#icon-settings"></use></svg>Ρυθμίσεις
       </button>
     </div>
   </nav>

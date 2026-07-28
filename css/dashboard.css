@@ -4,6 +4,20 @@
   gap: var(--space-4);
 }
 
+.kpi-grid-primary .kpi-tile {
+  padding: var(--space-6);
+}
+
+.kpi-grid-primary .kpi-value {
+  font-size: 30px;
+}
+
+.kpi-grid-primary .kpi-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+}
+
 .kpi-tile {
   position: relative;
   padding: var(--space-5);
@@ -18,16 +32,6 @@
 .kpi-tile:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-3px);
-}
-
-.kpi-tile-accent {
-  background: var(--brand-gradient);
-  border-color: transparent;
-  color: white;
-}
-
-.kpi-tile-accent .kpi-label {
-  color: rgba(255, 255, 255, 0.8);
 }
 
 .kpi-tile-header {
@@ -90,16 +94,13 @@
   background: linear-gradient(135deg, var(--accent-support-500) 0%, var(--accent-support-600) 100%);
 }
 
-.kpi-tile-accent .kpi-icon {
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(6px);
-}
-
 .kpi-label {
   margin: 0;
+  min-width: 0;
   font-size: 12px;
   font-weight: 650;
   color: var(--text-muted);
+  overflow-wrap: break-word;
 }
 
 .kpi-value {
@@ -121,21 +122,84 @@
   color: var(--text-muted);
 }
 
-.kpi-tile-accent .kpi-sub {
-  color: rgba(255, 255, 255, 0.75);
-}
-
 .kpi-trend {
   position: absolute;
   right: 14px;
   bottom: 14px;
 }
 
+/* Secondary metrics (compact strip, de-emphasized vs. the 4 primary KPIs) */
+
+.kpi-secondary-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.kpi-secondary-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 180px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+}
+
+.kpi-secondary-item:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.kpi-icon.kpi-secondary-icon {
+  width: 28px;
+  height: 28px;
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+}
+
+.kpi-secondary-text {
+  min-width: 0;
+}
+
+.kpi-secondary-label {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 650;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kpi-secondary-value {
+  display: block;
+  font-size: 15px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kpi-secondary-value-text {
+  font-variant-numeric: normal;
+}
+
+/* Analytics: the visual center of the dashboard */
+
 .dashboard-chart-row {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
   gap: var(--space-4);
   align-items: stretch;
+}
+
+.dashboard-chart-row-hero .dashboard-chart-card {
+  min-height: 320px;
 }
 
 .dashboard-chart-card {
@@ -145,6 +209,20 @@
 
 .dashboard-chart-card-narrow {
   min-width: 0;
+}
+
+/* Lower section: today's tasks + recent activity */
+
+.dashboard-lower-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+.dashboard-lower-grid .card {
+  display: flex;
+  flex-direction: column;
 }
 
 .recent-activity-list {
@@ -193,4 +271,47 @@
   font-variant-numeric: tabular-nums;
   font-size: 13px;
   white-space: nowrap;
+}
+
+.dashboard-empty-cta {
+  margin-top: 4px;
+}
+
+/* AI insight (πραγματικά δεδομένα από τον βοηθό, όχι fabricated) */
+
+.dashboard-ai-insight {
+  background: var(--accent-assistant-50);
+}
+
+.dashboard-ai-insight-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.dashboard-ai-insight-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent-assistant-gradient);
+  color: white;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+}
+
+.dashboard-ai-insight-text {
+  flex: 1;
+  min-width: 220px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.dashboard-ai-insight-text strong {
+  color: var(--text-primary);
 }

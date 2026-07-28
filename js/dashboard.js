@@ -1,11 +1,14 @@
 "use strict";
 
 import * as state from "./state.js";
+import { statusLabel } from "./state.js";
 import * as charts from "./charts.js";
+import { navigate } from "./router.js";
 import {
   formatDateForInput,
   formatDuration,
   formatHoursDecimal,
+  formatMinutes,
   startOfWeek,
   startOfMonth,
   endOfMonth,
@@ -26,18 +29,29 @@ export function init() {
     weekTrend: document.getElementById("kpi-week-hours-trend"),
     monthHours: document.getElementById("kpi-month-hours"),
     remainingTarget: document.getElementById("kpi-remaining-target"),
-    remainingTargetSub: document.getElementById("kpi-remaining-target-sub"),
     completedTasks: document.getElementById("kpi-completed-tasks"),
     pendingTasks: document.getElementById("kpi-pending-tasks"),
     topCategory: document.getElementById("kpi-top-category"),
     productivityScore: document.getElementById("kpi-productivity-score"),
-    productivityTrend: document.getElementById("kpi-productivity-trend"),
     avgDuration: document.getElementById("kpi-avg-duration"),
     streak: document.getElementById("kpi-streak"),
     focusScore: document.getElementById("kpi-focus-score"),
     recentList: document.getElementById("dashboard-recent-activity"),
-    recentEmpty: document.getElementById("dashboard-recent-empty")
+    recentEmpty: document.getElementById("dashboard-recent-empty"),
+    todayTasksList: document.getElementById("dashboard-today-tasks"),
+    todayTasksEmpty: document.getElementById("dashboard-today-tasks-empty"),
+    aiInsightBody: document.getElementById("dashboard-ai-insight-body")
   };
+
+  document.getElementById("dashboard-today-empty-cta").addEventListener("click", openNewEntry);
+  document.getElementById("dashboard-recent-empty-cta").addEventListener("click", openNewEntry);
+}
+
+/** Ανοίγει τη φόρμα νέας καταχώρησης μέσω του κουμπιού που είναι ορατό στο τρέχον layout (FAB σε κινητό, topbar σε desktop). */
+function openNewEntry() {
+  const toolbarButton = document.getElementById("toolbar-new-entry-button");
+  const fabButton = document.getElementById("fab-new-entry-button");
+  (fabButton.offsetParent ? fabButton : toolbarButton).click();
 }
 
 function completionRatio(entries) {
@@ -135,10 +149,8 @@ export function render() {
 
   if (remainingSeconds > 0) {
     elements.remainingTarget.textContent = formatDuration(remainingSeconds);
-    elements.remainingTargetSub.textContent = `από ωράριο ${(weeklyTargetMinutes / 60).toFixed(1).replace(/\.0$/, "")}ω/εβδομάδα`;
   } else {
     elements.remainingTarget.textContent = `+${formatDuration(-remainingSeconds)}`;
-    elements.remainingTargetSub.textContent = "πάνω από τον στόχο 🎉";
   }
 
   const completed = monthEntries.filter((entry) => entry.status === "done");
@@ -160,9 +172,49 @@ export function render() {
   elements.streak.textContent = `${computeStreak()} ημέρες`;
   elements.focusScore.textContent = `${Math.round(focusRatio(monthEntries) * 100)}%`;
 
+  renderTodayTasks(todayEntries);
   renderRecentActivity();
   renderTrends(now);
   renderCharts(now, monthEntries);
+  renderAiInsight();
+}
+
+function renderTodayTasks(todayEntries) {
+  const sorted = [...todayEntries].sort((first, second) => (first.startTime || "").localeCompare(second.startTime || ""));
+
+  elements.todayTasksList.innerHTML = "";
+  elements.todayTasksEmpty.hidden = sorted.length > 0;
+
+  sorted.forEach((entry) => {
+    const categoryMeta = state.getCategoryMeta(entry.category);
+
+    const item = document.createElement("article");
+    item.className = "recent-activity-item";
+
+    const icon = document.createElement("span");
+    icon.className = "recent-activity-icon";
+    icon.style.background = `${categoryMeta.color}22`;
+    icon.textContent = categoryMeta.icon;
+
+    const info = document.createElement("div");
+
+    const title = document.createElement("p");
+    title.className = "recent-activity-title";
+    title.textContent = entry.taskName;
+
+    const meta = document.createElement("p");
+    meta.className = "recent-activity-meta";
+    meta.textContent = `${entry.startTime}–${entry.endTime} · ${entry.category} · ${statusLabel(entry.status)}`;
+
+    info.append(title, meta);
+
+    const duration = document.createElement("span");
+    duration.className = "recent-activity-duration";
+    duration.textContent = formatDuration(entry.durationSeconds);
+
+    item.append(icon, info, duration);
+    elements.todayTasksList.append(item);
+  });
 }
 
 function renderRecentActivity() {
@@ -222,10 +274,15 @@ function renderTrends(now) {
 
 function renderCharts(now, monthEntries) {
   renderWeeklyHoursChart(now);
-  renderCategoryDonut(monthEntries, document.getElementById("dashboard-chart-category"));
-  renderMonthlyTrendChart(now);
-  renderWeekdayChart(monthEntries, document.getElementById("dashboard-chart-weekday"));
-  renderProductivityTrendChart(now);
+
+  const categoryContainer = document.getElementById("dashboard-chart-category");
+  const hasCategoryData = monthEntries.some((entry) => Number(entry.durationSeconds) > 0);
+
+  if (hasCategoryData) {
+    renderCategoryDonut(monthEntries, categoryContainer);
+  } else {
+    renderChartEmptyState(categoryContainer, "🍩", "Δεν υπάρχουν καταχωρήσεις αυτόν τον μήνα.");
+  }
 }
 
 function renderWeeklyHoursChart(now) {
@@ -235,12 +292,39 @@ function renderWeeklyHoursChart(now) {
   const labels = days.map((date) => new Intl.DateTimeFormat("el-GR", { weekday: "short" }).format(date));
   const values = days.map((date) => Number(formatHoursDecimal(state.calculateEntriesTotal(state.getEntriesForDate(formatDateForInput(date))))));
 
+  if (values.every((value) => !value)) {
+    renderChartEmptyState(container, "📊", "Δεν υπάρχουν ώρες τις τελευταίες 7 ημέρες.");
+    return;
+  }
+
   charts.renderBarChart(container, {
     labels,
     values,
     formatValue: (value) => `${value.toFixed(1)}ω`,
     emptyMessage: "Δεν υπάρχουν ώρες τις τελευταίες 7 ημέρες."
   });
+}
+
+/** Πλούσιο empty state για τα δύο κεντρικά γραφήματα του Dashboard (εικονίδιο + μήνυμα + CTA). */
+function renderChartEmptyState(container, icon, message) {
+  container.innerHTML = "";
+
+  const empty = document.createElement("div");
+  empty.className = "empty-state small-empty";
+
+  const iconEl = document.createElement("span");
+  iconEl.className = "empty-state-icon";
+  iconEl.setAttribute("aria-hidden", "true");
+  iconEl.textContent = icon;
+
+  const cta = document.createElement("button");
+  cta.type = "button";
+  cta.className = "button button-primary button-sm dashboard-empty-cta";
+  cta.textContent = "+ Νέα καταχώρηση";
+  cta.addEventListener("click", openNewEntry);
+
+  empty.append(iconEl, message, cta);
+  container.append(empty);
 }
 
 export function renderCategoryDonut(entries, container) {
@@ -264,29 +348,6 @@ export function renderCategoryDonut(entries, container) {
   });
 }
 
-function renderMonthlyTrendChart(now) {
-  const container = document.getElementById("dashboard-chart-monthly-trend");
-  const months = Array.from({ length: 6 }, (_, index) => {
-    const date = new Date(now.getFullYear(), now.getMonth() - (5 - index), 1);
-    return date;
-  });
-
-  const labels = months.map((date) => new Intl.DateTimeFormat("el-GR", { month: "short" }).format(date));
-
-  const values = months.map((date) => {
-    const from = formatDateForInput(startOfMonth(date));
-    const to = formatDateForInput(endOfMonth(date));
-    return Number(formatHoursDecimal(state.calculateEntriesTotal(state.getEntriesInRange(from, to))));
-  });
-
-  charts.renderLineChart(container, {
-    labels,
-    values,
-    formatValue: (value) => `${value.toFixed(1)}ω`,
-    emptyMessage: "Δεν υπάρχουν αρκετά δεδομένα ακόμα."
-  });
-}
-
 export function renderWeekdayChart(entries, container) {
   const totals = new Array(7).fill(0);
 
@@ -304,20 +365,45 @@ export function renderWeekdayChart(entries, container) {
   });
 }
 
-function renderProductivityTrendChart(now) {
-  const container = document.getElementById("dashboard-chart-productivity-trend");
-  const days = Array.from({ length: 14 }, (_, index) => addDays(now, index - 13));
+/** Μικρή, τοπική "εικόνα" από τον AI Βοηθό βασισμένη σε πραγματικά δεδομένα (tasks στον προγραμματιστή του). */
+function renderAiInsight() {
+  const container = elements.aiInsightBody;
+  container.innerHTML = "";
 
-  const labels = days.map((date) => String(date.getDate()));
-  const values = days.map((date) => {
-    const entries = state.getEntriesForDate(formatDateForInput(date));
-    return Math.round(completionRatio(entries) * 100);
-  });
+  const assistantTasks = state.getAssistantTasks();
 
-  charts.renderLineChart(container, {
-    labels,
-    values,
-    formatValue: (value) => `${value}%`,
-    emptyMessage: "Δεν υπάρχουν δεδομένα ακόμα."
-  });
+  const row = document.createElement("div");
+  row.className = "dashboard-ai-insight-row";
+
+  const icon = document.createElement("span");
+  icon.className = "dashboard-ai-insight-icon";
+  icon.setAttribute("aria-hidden", "true");
+  icon.textContent = "✨";
+
+  const text = document.createElement("p");
+  text.className = "dashboard-ai-insight-text";
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "button button-light button-sm";
+  button.addEventListener("click", () => navigate("assistant"));
+
+  if (assistantTasks.length > 0) {
+    const totalMinutes = assistantTasks.reduce((sum, task) => sum + Number(task.requestedMinutes || 0), 0);
+    const strongCount = document.createElement("strong");
+    strongCount.textContent = String(assistantTasks.length);
+
+    text.append(
+      "Έχεις ",
+      strongCount,
+      ` task${assistantTasks.length === 1 ? "" : "s"} (${formatMinutes(totalMinutes)}) στον προγραμματιστή του AI Βοηθού που περιμένουν πρόγραμμα.`
+    );
+    button.textContent = "Άνοιγμα AI Βοηθού";
+  } else {
+    text.textContent = "Ο AI Βοηθός μπορεί να σου προτείνει πρόγραμμα ημέρας με βάση τον διαθέσιμο χρόνο σου.";
+    button.textContent = "Δοκίμασε τον AI Βοηθό";
+  }
+
+  row.append(icon, text, button);
+  container.append(row);
 }
