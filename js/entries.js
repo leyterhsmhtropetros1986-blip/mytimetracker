@@ -16,6 +16,7 @@ const MAX_RECURRING_OCCURRENCES = 8;
 
 let entryModal;
 let entryModalTitle;
+let deleteEntryButton;
 let entryIdInput;
 let entryDateInput;
 let entryTaskNameInput;
@@ -105,6 +106,21 @@ export function init() {
   document.getElementById("close-modal-button").addEventListener("click", () => ui.closeModal(entryModal));
   document.getElementById("cancel-modal-button").addEventListener("click", () => ui.closeModal(entryModal));
   document.getElementById("save-entry-button").addEventListener("click", saveEntry);
+
+  deleteEntryButton = document.getElementById("delete-entry-button");
+  deleteEntryButton.addEventListener("click", async () => {
+    const entry = state.findEntry(entryIdInput.value);
+
+    if (!entry) {
+      return;
+    }
+
+    const deleted = await handleDeleteEntry(entry);
+
+    if (deleted) {
+      ui.closeModal(entryModal);
+    }
+  });
 
   clearDayButton.addEventListener("click", handleClearDay);
 
@@ -252,6 +268,7 @@ function renderTagChips() {
 
 function openNewEntryModal() {
   entryModalTitle.textContent = "Νέο task";
+  deleteEntryButton.hidden = true;
 
   entryIdInput.value = "";
   entryDateInput.value = formatDateForInput(state.getSelectedDate());
@@ -290,6 +307,7 @@ export function openEditEntryModal(entryId) {
   }
 
   entryModalTitle.textContent = "Επεξεργασία task";
+  deleteEntryButton.hidden = false;
 
   entryIdInput.value = entry.id;
   entryDateInput.value = entry.date;
@@ -583,11 +601,12 @@ async function handleDeleteEntry(entry) {
   });
 
   if (!confirmed) {
-    return;
+    return false;
   }
 
   state.deleteEntry(entry.id);
   ui.toast("Το task διαγράφηκε.", "success");
+  return true;
 }
 
 async function handleClearDay() {

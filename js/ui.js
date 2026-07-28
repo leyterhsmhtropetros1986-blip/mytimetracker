@@ -330,18 +330,15 @@ export function initShell() {
 
 function initGuideModal() {
   const guideModal = document.getElementById("guide-modal");
-  const guideButton = document.getElementById("guide-button");
-  const guideButtonMobile = document.getElementById("sidebar-guide-button");
+  const guideButton = document.getElementById("sidebar-guide-button");
   const closeGuideButton = document.getElementById("close-guide-modal-button");
 
   wireModalDismissal(guideModal);
 
-  const openGuide = () => {
+  guideButton.addEventListener("click", () => {
     document.body.classList.remove("sidebar-open");
     openModal(guideModal);
-  };
+  });
 
-  guideButton.addEventListener("click", openGuide);
-  guideButtonMobile.addEventListener("click", openGuide);
   closeGuideButton.addEventListener("click", () => closeModal(guideModal));
 }

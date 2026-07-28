@@ -76,18 +76,6 @@
     display: grid;
   }
 
-  .sidebar-link.sidebar-link-mobile-only {
-    display: flex;
-  }
-
-  #guide-button {
-    display: none;
-  }
-
-  .guide-footer {
-    display: none;
-  }
-
   .app-topbar {
     padding: 0 var(--space-4);
     gap: var(--space-2);
