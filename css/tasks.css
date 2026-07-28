@@ -28,14 +28,19 @@
   gap: 14px;
   padding: 14px;
   border: 1px solid var(--border-subtle);
+  border-left: 3px solid transparent;
   border-radius: var(--radius-md);
   background: var(--surface-sunken);
-  transition: background-color var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
 }
 
 .history-row:hover {
   background: var(--surface-card-hover);
   border-color: var(--border-default);
+  border-left-color: var(--accent-tasks-500);
+  transform: translateX(2px);
+  box-shadow: var(--shadow-sm);
 }
 
 .history-cell {
@@ -92,6 +97,14 @@
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   background: var(--surface-card);
+  transition: box-shadow var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard);
+}
+
+.entry-item:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-tasks-500);
+  transform: translateY(-2px);
 }
 
 .entry-badges {
@@ -146,12 +159,28 @@
   cursor: pointer;
   font-weight: 650;
   font-size: 12px;
+  transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+
+.entry-action-button:active {
+  transform: scale(0.95);
 }
 
 .entry-action-button.edit {
   color: var(--brand-500);
 }
 
+.entry-action-button.edit:hover {
+  background: var(--brand-50);
+  border-color: var(--brand-100);
+}
+
 .entry-action-button.delete {
   color: var(--status-critical);
+}
+
+.entry-action-button.delete:hover {
+  background: var(--status-critical-bg);
+  border-color: var(--status-critical);
 }

@@ -259,61 +259,94 @@
           <div class="kpi-grid" id="kpi-grid">
 
             <article class="kpi-tile kpi-tile-accent">
-              <p class="kpi-label">Ώρες σήμερα</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="dashboard" aria-hidden="true">🔥</span>
+                <p class="kpi-label">Ώρες σήμερα</p>
+              </div>
               <strong class="kpi-value" id="kpi-today-hours">00:00:00</strong>
               <div class="kpi-trend" id="kpi-today-hours-trend"></div>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Ώρες εβδομάδας</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="calendar" aria-hidden="true">📅</span>
+                <p class="kpi-label">Ώρες εβδομάδας</p>
+              </div>
               <strong class="kpi-value" id="kpi-week-hours">00:00:00</strong>
               <div class="kpi-trend" id="kpi-week-hours-trend"></div>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Ώρες μήνα</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="timeline" aria-hidden="true">🗓️</span>
+                <p class="kpi-label">Ώρες μήνα</p>
+              </div>
               <strong class="kpi-value" id="kpi-month-hours">00:00:00</strong>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Απόσταση από στόχο</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="reports" aria-hidden="true">🎯</span>
+                <p class="kpi-label">Απόσταση από στόχο</p>
+              </div>
               <strong class="kpi-value" id="kpi-remaining-target">00:00:00</strong>
               <p class="kpi-sub" id="kpi-remaining-target-sub"></p>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Ολοκληρωμένα tasks</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="tasks" aria-hidden="true">✅</span>
+                <p class="kpi-label">Ολοκληρωμένα tasks</p>
+              </div>
               <strong class="kpi-value" id="kpi-completed-tasks">0</strong>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Εκκρεμή tasks</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="statistics" aria-hidden="true">⏳</span>
+                <p class="kpi-label">Εκκρεμή tasks</p>
+              </div>
               <strong class="kpi-value" id="kpi-pending-tasks">0</strong>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Πιο παραγωγική κατηγορία</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="support" aria-hidden="true">🏆</span>
+                <p class="kpi-label">Πιο παραγωγική κατηγορία</p>
+              </div>
               <strong class="kpi-value kpi-value-text" id="kpi-top-category">—</strong>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Δείκτης παραγωγικότητας</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="assistant" aria-hidden="true">⚡</span>
+                <p class="kpi-label">Δείκτης παραγωγικότητας</p>
+              </div>
               <strong class="kpi-value" id="kpi-productivity-score">0%</strong>
               <div class="kpi-trend" id="kpi-productivity-trend"></div>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Μέση διάρκεια task</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="calendar" aria-hidden="true">⏱️</span>
+                <p class="kpi-label">Μέση διάρκεια task</p>
+              </div>
               <strong class="kpi-value" id="kpi-avg-duration">00:00:00</strong>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Συνεχόμενες ημέρες</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="tasks" aria-hidden="true">🌟</span>
+                <p class="kpi-label">Συνεχόμενες ημέρες</p>
+              </div>
               <strong class="kpi-value" id="kpi-streak">0 ημέρες</strong>
             </article>
 
             <article class="kpi-tile">
-              <p class="kpi-label">Focus score</p>
+              <div class="kpi-tile-header">
+                <span class="kpi-icon" data-accent="assistant" aria-hidden="true">🧠</span>
+                <p class="kpi-label">Focus score</p>
+              </div>
               <strong class="kpi-value" id="kpi-focus-score">0%</strong>
               <p class="kpi-sub">λιγότερα, μεγαλύτερα blocks</p>
             </article>
@@ -544,22 +577,34 @@
 
               <div class="report-summary-grid">
                 <article class="kpi-tile">
-                  <p class="kpi-label">Περίοδος</p>
+                  <div class="kpi-tile-header">
+                    <span class="kpi-icon" data-accent="reports" aria-hidden="true">📅</span>
+                    <p class="kpi-label">Περίοδος</p>
+                  </div>
                   <strong class="kpi-value kpi-value-text" id="report-summary-period">—</strong>
                 </article>
 
                 <article class="kpi-tile">
-                  <p class="kpi-label">Σύνολο εγγραφών</p>
+                  <div class="kpi-tile-header">
+                    <span class="kpi-icon" data-accent="reports" aria-hidden="true">📋</span>
+                    <p class="kpi-label">Σύνολο εγγραφών</p>
+                  </div>
                   <strong class="kpi-value" id="report-summary-total-tasks">0</strong>
                 </article>
 
                 <article class="kpi-tile">
-                  <p class="kpi-label">Συνολικές ώρες</p>
+                  <div class="kpi-tile-header">
+                    <span class="kpi-icon" data-accent="reports" aria-hidden="true">⏱️</span>
+                    <p class="kpi-label">Συνολικές ώρες</p>
+                  </div>
                   <strong class="kpi-value" id="report-summary-total-hours">00:00:00</strong>
                 </article>
 
                 <article class="kpi-tile">
-                  <p class="kpi-label">Μέσος όρος / task</p>
+                  <div class="kpi-tile-header">
+                    <span class="kpi-icon" data-accent="reports" aria-hidden="true">📈</span>
+                    <p class="kpi-label">Μέσος όρος / task</p>
+                  </div>
                   <strong class="kpi-value" id="report-summary-avg">00:00:00</strong>
                 </article>
               </div>
@@ -601,22 +646,34 @@
 
             <div class="report-summary-grid">
               <article class="kpi-tile">
-                <p class="kpi-label">Ολοκλήρωση</p>
+                <div class="kpi-tile-header">
+                  <span class="kpi-icon" data-accent="statistics" aria-hidden="true">✅</span>
+                  <p class="kpi-label">Ολοκλήρωση</p>
+                </div>
                 <strong class="kpi-value" id="stats-completion-rate">0%</strong>
               </article>
 
               <article class="kpi-tile">
-                <p class="kpi-label">Μέση διάρκεια</p>
+                <div class="kpi-tile-header">
+                  <span class="kpi-icon" data-accent="statistics" aria-hidden="true">⏱️</span>
+                  <p class="kpi-label">Μέση διάρκεια</p>
+                </div>
                 <strong class="kpi-value" id="stats-avg-duration">00:00:00</strong>
               </article>
 
               <article class="kpi-tile">
-                <p class="kpi-label">Focus score</p>
+                <div class="kpi-tile-header">
+                  <span class="kpi-icon" data-accent="statistics" aria-hidden="true">🧠</span>
+                  <p class="kpi-label">Focus score</p>
+                </div>
                 <strong class="kpi-value" id="stats-focus-score">0%</strong>
               </article>
 
               <article class="kpi-tile">
-                <p class="kpi-label">Πιο ενεργή ημέρα</p>
+                <div class="kpi-tile-header">
+                  <span class="kpi-icon" data-accent="statistics" aria-hidden="true">🔥</span>
+                  <p class="kpi-label">Πιο ενεργή ημέρα</p>
+                </div>
                 <strong class="kpi-value kpi-value-text" id="stats-top-day">—</strong>
               </article>
             </div>

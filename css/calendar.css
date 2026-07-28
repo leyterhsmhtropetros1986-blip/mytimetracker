@@ -6,7 +6,7 @@
   gap: var(--space-4);
   padding: var(--space-5) var(--space-6);
   border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, #0f1222 0%, #232852 100%);
+  background: linear-gradient(135deg, #0a1128 0%, #123a7a 60%, #1558ea 100%);
   color: white;
   box-shadow: var(--shadow-md);
 }
@@ -127,8 +127,8 @@
 }
 
 .calendar-day:hover {
-  border-color: var(--brand-400);
-  background: var(--brand-50);
+  border-color: var(--accent-calendar-500);
+  background: var(--accent-calendar-50);
   transform: translateY(-1px);
 }
 
@@ -139,12 +139,12 @@
 }
 
 .calendar-day.today {
-  border-color: var(--brand-500);
-  box-shadow: 0 0 0 1px var(--brand-500);
+  border-color: var(--accent-calendar-500);
+  box-shadow: 0 0 0 1px var(--accent-calendar-500);
 }
 
 .calendar-day.today .calendar-day-number {
-  color: var(--brand-600);
+  color: var(--accent-calendar-600);
 }
 
 .calendar-day.overdue {
@@ -153,9 +153,9 @@
 
 .calendar-day.selected {
   border-color: transparent;
-  background: var(--brand-gradient);
+  background: linear-gradient(135deg, var(--accent-calendar-500) 0%, var(--accent-calendar-600) 100%);
   color: white;
-  animation: calendar-day-select var(--duration-base) var(--ease-standard);
+  animation: calendar-day-select var(--duration-base) var(--ease-spring);
 }
 
 @keyframes calendar-day-select {
@@ -221,7 +221,7 @@
 }
 
 .calendar-week-column.today {
-  border-color: var(--brand-500);
+  border-color: var(--accent-calendar-500);
 }
 
 .calendar-week-column-header {
@@ -246,9 +246,15 @@
   padding: 6px 8px;
   border-radius: var(--radius-sm);
   background: var(--surface-card);
-  border-left: 3px solid var(--chart-series-1);
+  border-left: 3px solid var(--accent-calendar-500);
   font-size: 11px;
   cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.calendar-week-entry:hover {
+  transform: translateX(2px);
+  box-shadow: var(--shadow-xs);
 }
 
 .calendar-week-entry strong {

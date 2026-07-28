@@ -23,6 +23,34 @@ export function seriesColorVar(index) {
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
+let gradientIdCounter = 0;
+
+function nextGradientId(prefix) {
+  gradientIdCounter += 1;
+  return `${prefix}-${gradientIdCounter}`;
+}
+
+/** Κάθετο gradient (ζωηρό πάνω -> πιο ανοιχτό κάτω) για ένα δεδομένο χρώμα σειράς. */
+function verticalFillGradient(defsEl, color, { topOpacity = 1, bottomOpacity = 0.55 } = {}) {
+  const id = nextGradientId("chart-grad");
+
+  const gradient = svgEl("linearGradient", {
+    id,
+    x1: "0",
+    y1: "0",
+    x2: "0",
+    y2: "1"
+  });
+
+  const stopTop = svgEl("stop", { offset: "0%", "stop-color": color, "stop-opacity": String(topOpacity) });
+  const stopBottom = svgEl("stop", { offset: "100%", "stop-color": color, "stop-opacity": String(bottomOpacity) });
+
+  gradient.append(stopTop, stopBottom);
+  defsEl.append(gradient);
+
+  return `url(#${id})`;
+}
+
 function svgEl(tag, attrs = {}) {
   const el = document.createElementNS(SVG_NS, tag);
 
@@ -43,7 +71,6 @@ function getTooltip() {
   if (!tooltipEl) {
     tooltipEl = document.createElement("div");
     tooltipEl.className = "chart-tooltip";
-    tooltipEl.hidden = true;
     document.body.append(tooltipEl);
   }
 
@@ -61,8 +88,8 @@ function showTooltip(event, lines) {
     tooltip.append(row);
   });
 
-  tooltip.hidden = false;
   positionTooltip(event);
+  tooltip.classList.add("chart-tooltip-visible");
 }
 
 function positionTooltip(event) {
@@ -87,7 +114,7 @@ function positionTooltip(event) {
 
 function hideTooltip() {
   if (tooltipEl) {
-    tooltipEl.hidden = true;
+    tooltipEl.classList.remove("chart-tooltip-visible");
   }
 }
 
@@ -142,6 +169,9 @@ export function renderBarChart(container, { labels, values, colors, formatValue,
     "aria-label": "Bar chart"
   });
 
+  const defs = svgEl("defs");
+  svg.append(defs);
+
   [0, 0.5, 1].forEach((fraction) => {
     const y = paddingTop + plotHeight * (1 - fraction);
 
@@ -168,6 +198,7 @@ export function renderBarChart(container, { labels, values, colors, formatValue,
     const barHeight = Math.max(2, (value / niceMax) * plotHeight);
     const y = paddingTop + plotHeight - barHeight;
     const color = colors ? colors[index % colors.length] : seriesColorVar(0);
+    const fill = verticalFillGradient(defs, color, { topOpacity: 1, bottomOpacity: 0.72 });
 
     const rect = svgEl("rect", {
       x: bandCenter - barWidth / 2,
@@ -176,7 +207,7 @@ export function renderBarChart(container, { labels, values, colors, formatValue,
       height: barHeight,
       rx: 4,
       class: "chart-bar",
-      style: `fill:${color}`
+      style: `fill:${fill}; animation-delay:${index * 40}ms`
     });
 
     attachTooltipHandlers(rect, [`${labels[index]}: ${formatValue ? formatValue(value) : value}`]);
@@ -226,6 +257,9 @@ export function renderLineChart(container, { labels, values, color, formatValue,
     "aria-label": "Line chart"
   });
 
+  const defs = svgEl("defs");
+  svg.append(defs);
+
   [0, 0.5, 1].forEach((fraction) => {
     const y = paddingTop + plotHeight * (1 - fraction);
 
@@ -253,8 +287,12 @@ export function renderLineChart(container, { labels, values, color, formatValue,
     points.map((point) => `L${point.x},${point.y}`).join(" ") +
     ` L${points[points.length - 1].x},${paddingTop + plotHeight} Z`;
 
-  svg.append(svgEl("path", { d: areaPath, class: "chart-area", style: `fill:${seriesColor}` }));
-  svg.append(svgEl("path", { d: linePath, class: "chart-line", style: `stroke:${seriesColor}` }));
+  const areaFill = verticalFillGradient(defs, seriesColor, { topOpacity: 0.32, bottomOpacity: 0 });
+
+  svg.append(svgEl("path", { d: areaPath, class: "chart-area", style: `fill:${areaFill}` }));
+
+  const linePathEl = svgEl("path", { d: linePath, class: "chart-line", style: `stroke:${seriesColor}` });
+  svg.append(linePathEl);
 
   points.forEach((point, index) => {
     const dot = svgEl("circle", {
@@ -262,7 +300,7 @@ export function renderLineChart(container, { labels, values, color, formatValue,
       cy: point.y,
       r: 4,
       class: "chart-dot",
-      style: `fill:${seriesColor}`
+      style: `fill:${seriesColor}; animation-delay:${index * 25}ms`
     });
 
     attachTooltipHandlers(dot, [`${labels[index]}: ${formatValue ? formatValue(point.value) : point.value}`]);
@@ -281,6 +319,15 @@ export function renderLineChart(container, { labels, values, color, formatValue,
   });
 
   container.append(svg);
+
+  const length = linePathEl.getTotalLength();
+  linePathEl.style.strokeDasharray = `${length}`;
+  linePathEl.style.strokeDashoffset = `${length}`;
+
+  window.requestAnimationFrame(() => {
+    linePathEl.style.transition = `stroke-dashoffset ${points.length > 20 ? 700 : 550}ms var(--ease-standard)`;
+    linePathEl.style.strokeDashoffset = "0";
+  });
 }
 
 /* =========================
@@ -320,24 +367,30 @@ export function renderDonutChart(container, { segments, formatValue, emptyMessag
     const gap = circumference - dash;
     const color = segment.color || seriesColorVar(index);
 
+    /* Η βασική περιστροφή (ώστε το donut να ξεκινά από τις 12) μπαίνει σε ένα
+       περιτυλισσόμενο <g> με SVG attribute, όχι στο ίδιο το circle — αλλιώς το
+       CSS "animation" του .chart-donut-segment (που ζωγραφίζει transform:scale)
+       θα υπερίσχυε του attribute και θα χαλούσε την ευθυγράμμιση. */
+    const group = svgEl("g", { transform: `rotate(-90 ${size / 2} ${size / 2})` });
+
     const circle = svgEl("circle", {
       cx: size / 2,
       cy: size / 2,
       r: radius,
       fill: "none",
-      style: `stroke:${color}`,
+      style: `stroke:${color}; animation-delay:${index * 60}ms`,
       "stroke-width": strokeWidth,
       "stroke-dasharray": `${dash} ${gap}`,
       "stroke-dashoffset": -offset,
-      class: "chart-donut-segment",
-      transform: `rotate(-90 ${size / 2} ${size / 2})`
+      class: "chart-donut-segment"
     });
 
     attachTooltipHandlers(circle, [
       `${segment.label}: ${formatValue ? formatValue(segment.value) : segment.value} (${Math.round(fraction * 100)}%)`
     ]);
 
-    svg.append(circle);
+    group.append(circle);
+    svg.append(group);
     offset += fraction * circumference;
   });
 

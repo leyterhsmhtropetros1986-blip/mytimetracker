@@ -12,6 +12,14 @@
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   background: var(--surface-sunken);
+  transition: box-shadow var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+
+.category-manager-row:hover {
+  box-shadow: var(--shadow-sm);
+  border-color: var(--accent-settings-500);
+  transform: translateX(2px);
 }
 
 .category-manager-swatch {
@@ -61,6 +69,12 @@
   background: var(--surface-card);
   flex: 1;
   min-width: 140px;
+  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.category-add-row input[type="text"]:focus {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px var(--brand-100);
 }
 
 .faq-list {
@@ -73,12 +87,22 @@
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   background: var(--surface-sunken);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.faq-item[open] {
+  border-color: var(--accent-support-500);
 }
 
 .faq-item summary {
   cursor: pointer;
   font-weight: 650;
   font-size: 14px;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.faq-item summary:hover {
+  color: var(--accent-support-500);
 }
 
 .faq-item p {

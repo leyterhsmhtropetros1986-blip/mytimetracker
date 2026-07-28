@@ -44,9 +44,15 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--chart-series-1);
+  background: var(--accent-timeline-500);
   box-shadow: 0 0 0 4px var(--surface-page);
   flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.timeline-row:hover .timeline-row-dot {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 5px var(--surface-page), 0 0 0 7px var(--accent-timeline-50);
 }
 
 .timeline-row-line {
@@ -67,6 +73,16 @@
   border-radius: var(--radius-lg);
   background: var(--surface-card);
   box-shadow: var(--shadow-xs);
+  cursor: pointer;
+  transition: box-shadow var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard),
+    transform var(--duration-base) var(--ease-standard);
+}
+
+.timeline-item:hover,
+.timeline-item:focus-visible {
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-timeline-500);
+  transform: translateX(3px);
 }
 
 .timeline-item-header {

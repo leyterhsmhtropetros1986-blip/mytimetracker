@@ -8,12 +8,14 @@
   border-radius: var(--radius-lg);
   background: var(--surface-card);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
+  transition: box-shadow var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard),
+    transform var(--duration-base) var(--ease-standard);
 }
 
 .card:hover {
   box-shadow: var(--shadow-md);
   border-color: var(--border-default);
+  transform: translateY(-2px);
 }
 
 .card h2,
@@ -51,6 +53,7 @@
 ========================================================= */
 
 .button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -69,7 +72,7 @@
 }
 
 .button:active {
-  transform: translateY(1px) scale(0.99);
+  transform: translateY(1px) scale(0.98);
 }
 
 .button:disabled {
@@ -86,22 +89,34 @@
 .button-primary {
   background: var(--brand-gradient);
   color: var(--text-on-brand);
-  box-shadow: 0 6px 16px rgba(42, 120, 214, 0.28);
+  box-shadow: 0 8px 20px rgba(100, 21, 234, 0.3);
 }
 
 .button-primary:hover:not(:disabled) {
-  box-shadow: 0 10px 22px rgba(42, 120, 214, 0.36);
-  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(100, 21, 234, 0.4);
+  transform: translateY(-2px);
 }
 
 .button-danger {
   background: var(--status-critical);
   color: white;
+  box-shadow: 0 6px 16px rgba(203, 49, 49, 0.28);
+}
+
+.button-danger:hover:not(:disabled) {
+  box-shadow: 0 10px 22px rgba(203, 49, 49, 0.36);
+  transform: translateY(-2px);
 }
 
 .button-success {
   background: var(--status-good);
   color: white;
+  box-shadow: 0 6px 16px rgba(10, 130, 10, 0.26);
+}
+
+.button-success:hover:not(:disabled) {
+  box-shadow: 0 10px 22px rgba(10, 130, 10, 0.34);
+  transform: translateY(-2px);
 }
 
 .button-light {
@@ -112,6 +127,7 @@
 
 .button-light:hover:not(:disabled) {
   background: var(--surface-sunken);
+  transform: translateY(-1px);
 }
 
 .button-sm {
@@ -138,11 +154,16 @@
   cursor: pointer;
   font-size: 20px;
   line-height: 1;
-  transition: background-color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
 }
 
 .icon-button:hover {
-  background: var(--surface-sunken);
+  background: var(--brand-50);
+  border-color: var(--brand-100);
+  color: var(--brand-600);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .icon-button:active {
@@ -162,6 +183,7 @@
   font-size: 11px;
   font-weight: 700;
   white-space: nowrap;
+  transition: transform var(--duration-fast) var(--ease-standard);
 }
 
 .badge-category {
@@ -250,15 +272,37 @@
   padding: var(--space-8) var(--space-4);
   color: var(--text-secondary);
   text-align: center;
+  animation: fade-in-up var(--duration-slow) var(--ease-standard);
 }
 
 .empty-state-icon {
-  font-size: 34px;
-  opacity: 0.8;
+  font-size: 36px;
+  opacity: 0.85;
+  animation: empty-icon-float 3.2s var(--ease-standard) infinite;
 }
 
 .small-empty {
   padding: var(--space-5);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes empty-icon-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -292,9 +336,10 @@
   background: var(--text-primary);
   color: var(--surface-card);
   box-shadow: var(--shadow-lg);
+  border-left: 3px solid rgba(255, 255, 255, 0.35);
   opacity: 0;
-  transform: translateY(12px) scale(0.98);
-  transition: opacity var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard);
+  transform: translateY(14px) scale(0.96);
+  transition: opacity var(--duration-base) var(--ease-spring), transform var(--duration-base) var(--ease-spring);
   font-size: 14px;
   line-height: 1.45;
 }
@@ -306,18 +351,22 @@
 
 .toast-success {
   background: #0c3a17;
+  border-left-color: var(--status-good);
 }
 
 .toast-error {
   background: #3a0f0f;
+  border-left-color: var(--status-critical);
 }
 
 .toast-warning {
   background: #3a2a05;
+  border-left-color: var(--status-warning);
 }
 
 .toast-info {
   background: var(--text-primary);
+  border-left-color: var(--brand-400);
 }
 
 /* =========================================================
@@ -327,15 +376,29 @@
 .chart-tooltip {
   position: fixed;
   z-index: 1300;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
+  padding: 9px 13px;
+  border-radius: var(--radius-md);
   background: var(--text-primary);
   color: var(--surface-card);
   font-size: 12px;
+  font-weight: 600;
   line-height: 1.4;
   box-shadow: var(--shadow-lg);
   pointer-events: none;
   max-width: 220px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px) scale(0.96);
+  transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard),
+    visibility 0s linear var(--duration-fast);
+}
+
+.chart-tooltip.chart-tooltip-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard),
+    visibility 0s linear 0s;
 }
 
 /* =========================================================
@@ -359,8 +422,8 @@
   position: absolute;
   inset: 0;
   background: var(--surface-overlay);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   animation: modal-fade-in var(--duration-base) var(--ease-standard);
 }
 
@@ -374,7 +437,7 @@
   border-radius: var(--radius-xl);
   background: var(--surface-card);
   box-shadow: var(--shadow-lg);
-  animation: modal-pop-in var(--duration-base) var(--ease-standard);
+  animation: modal-pop-in var(--duration-slow) var(--ease-spring);
 }
 
 .modal-content-small {
@@ -397,7 +460,7 @@
 @keyframes modal-pop-in {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.98);
+    transform: translateY(18px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -436,6 +499,7 @@
 .chart-svg {
   width: 100%;
   height: auto;
+  animation: fade-in-up var(--duration-slow) var(--ease-standard);
 }
 
 .chart-gridline {
@@ -450,7 +514,10 @@
 
 .chart-bar {
   cursor: pointer;
+  transform-box: fill-box;
+  transform-origin: bottom;
   transition: opacity var(--duration-fast) var(--ease-standard);
+  animation: chart-bar-grow var(--duration-slow) var(--ease-spring) backwards;
 }
 
 .chart-bar:hover,
@@ -458,21 +525,48 @@
   opacity: 0.82;
 }
 
+@keyframes chart-bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
 .chart-line {
   fill: none;
-  stroke-width: 2;
+  stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .chart-area {
-  opacity: 0.1;
+  opacity: 0.9;
 }
 
 .chart-dot {
   cursor: pointer;
   stroke: var(--surface-card);
   stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--duration-fast) var(--ease-standard);
+  animation: chart-dot-pop var(--duration-base) var(--ease-spring) backwards;
+}
+
+.chart-dot:hover,
+.chart-dot:focus-visible {
+  transform: scale(1.4);
+}
+
+@keyframes chart-dot-pop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 .chart-donut-wrapper {
@@ -490,18 +584,33 @@
 
 .chart-donut-segment {
   cursor: pointer;
-  transition: opacity var(--duration-fast) var(--ease-standard);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+  animation: chart-donut-grow var(--duration-slow) var(--ease-spring) backwards;
 }
 
 .chart-donut-segment:hover,
 .chart-donut-segment:focus-visible {
   opacity: 0.85;
+  transform: scale(1.035);
+}
+
+@keyframes chart-donut-grow {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .chart-donut-total {
   fill: var(--text-primary);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .chart-donut-total-label {
@@ -537,6 +646,14 @@
 .chart-heatmap-cell {
   cursor: pointer;
   fill: var(--seq-0);
+  rx: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.chart-heatmap-cell:hover {
+  transform: scale(1.18);
 }
 
 .chart-heatmap-step-1 {

@@ -1,27 +1,71 @@
 /* =========================================================
    Design tokens — light/dark, spacing, radius, shadow, motion
-   Categorical/sequential/status colors follow the validated
-   reference palette (CVD-safe, contrast-checked).
+   Brand is a vivid purple→pink premium identity; each module
+   additionally carries its own accent (used for sidebar active
+   state, KPI icon badges, and page-level accents) — see the
+   "Module accents" block. Chart categorical/sequential/status
+   colors keep following the validated reference palette
+   (CVD-safe, contrast-checked) so data marks stay accessible.
 ========================================================= */
 
 :root {
   color-scheme: light;
 
-  /* Brand */
-  --brand-50: #eff6ff;
-  --brand-100: #dbeafe;
-  --brand-400: #5b9bf2;
-  --brand-500: #2a78d6;
-  --brand-600: #1c5cab;
-  --brand-700: #184f95;
-  --brand-gradient: linear-gradient(135deg, #2a78d6 0%, #4a3aa7 100%);
+  /* Brand — vivid purple, gradient toward pink for hero surfaces */
+  --brand-50: #ede4fb;
+  --brand-100: #dcc9f6;
+  --brand-400: #8b4ff0;
+  --brand-500: #6415ea;
+  --brand-600: #5412c4;
+  --brand-700: #3d0e94;
+  --brand-gradient: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+
+  /* Module accents (Dashboard/Calendar/Timeline/Tasks/Reports/Statistics/
+     Assistant/Settings/Support) — soft tint for chips/backgrounds, solid
+     500 for icon badges (white text ≥4.5:1), 600 for text-on-tint. */
+  --accent-dashboard-50: #ede4fb;
+  --accent-dashboard-500: #7c3aed;
+  --accent-dashboard-600: #5412c4;
+
+  --accent-calendar-50: #e4ebfb;
+  --accent-calendar-500: #2563eb;
+  --accent-calendar-600: #124ac4;
+
+  --accent-timeline-50: #e3f7fc;
+  --accent-timeline-500: #0891b2;
+  --accent-timeline-600: #077792;
+
+  --accent-tasks-50: #e3fdf5;
+  --accent-tasks-500: #059669;
+  --accent-tasks-600: #04805a;
+
+  --accent-reports-50: #fcece3;
+  --accent-reports-500: #ea580c;
+  --accent-reports-600: #b84509;
+
+  --accent-statistics-50: #fae6ef;
+  --accent-statistics-500: #db2777;
+  --accent-statistics-600: #b81f63;
+
+  --accent-assistant-50: #ebe3fc;
+  --accent-assistant-500: #8b5cf6;
+  --accent-assistant-600: #460bcb;
+  --accent-assistant-gradient: linear-gradient(135deg, #8b5cf6 0%, #4f46e5 100%);
+
+  --accent-settings-50: #edeff2;
+  --accent-settings-500: #64748b;
+  --accent-settings-600: #5a687d;
+
+  --accent-support-50: #e6e5fa;
+  --accent-support-500: #4f46e5;
+  --accent-support-600: #241abc;
 
   /* Surfaces */
-  --surface-page: #f5f6fa;
+  --surface-page: #f6f5fb;
   --surface-card: #ffffff;
-  --surface-card-hover: #fbfbfe;
-  --surface-sunken: #f1f2f7;
-  --surface-overlay: rgba(15, 17, 26, 0.55);
+  --surface-card-hover: #fdfbff;
+  --surface-sunken: #f2f1f9;
+  --surface-overlay: rgba(20, 12, 36, 0.55);
   --surface-glass: rgba(255, 255, 255, 0.72);
 
   /* Ink */
@@ -32,8 +76,8 @@
   --text-on-brand: #ffffff;
 
   /* Borders */
-  --border-subtle: #e7e8f0;
-  --border-default: #dcded9;
+  --border-subtle: #e9e6f2;
+  --border-default: #dcd8ea;
   --border-strong: rgba(15, 17, 26, 0.14);
 
   /* Status (fixed — never themed). Text-color steps darkened from the
@@ -70,18 +114,20 @@
   --chart-axis: #c3c2b7;
   --chart-text-muted: #74726d;
 
-  /* Priority */
-  --priority-critical: #d03b3b;
+  /* Priority — darkened from the chart hue to clear 4.5:1 as badge text
+     (priority-high has its own dedicated override in components.css since
+     its badge uses a bespoke background, not one of the -bg tokens below). */
+  --priority-critical: #cb3131;
   --priority-high: #eb6834;
-  --priority-medium: #eda100;
-  --priority-low: #2a78d6;
+  --priority-medium: #966600;
+  --priority-low: #2467b9;
 
-  /* Elevation */
-  --shadow-xs: 0 1px 2px rgba(15, 17, 26, 0.05);
-  --shadow-sm: 0 2px 6px rgba(15, 17, 26, 0.06), 0 1px 2px rgba(15, 17, 26, 0.05);
-  --shadow-md: 0 8px 24px rgba(15, 17, 26, 0.08), 0 2px 6px rgba(15, 17, 26, 0.05);
-  --shadow-lg: 0 20px 45px rgba(15, 17, 26, 0.14), 0 6px 16px rgba(15, 17, 26, 0.08);
-  --shadow-focus: 0 0 0 3px rgba(42, 120, 214, 0.35);
+  /* Elevation — soft, slightly warm (purple-tinted) premium shadows */
+  --shadow-xs: 0 1px 2px rgba(46, 16, 101, 0.06);
+  --shadow-sm: 0 2px 8px rgba(46, 16, 101, 0.07), 0 1px 2px rgba(46, 16, 101, 0.05);
+  --shadow-md: 0 10px 28px rgba(46, 16, 101, 0.10), 0 2px 8px rgba(46, 16, 101, 0.06);
+  --shadow-lg: 0 24px 50px rgba(46, 16, 101, 0.16), 0 8px 18px rgba(46, 16, 101, 0.09);
+  --shadow-focus: 0 0 0 3px rgba(100, 21, 234, 0.32);
 
   /* Radius */
   --radius-sm: 8px;
@@ -102,6 +148,7 @@
 
   /* Motion */
   --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --duration-fast: 120ms;
   --duration-base: 200ms;
   --duration-slow: 320ms;
@@ -114,20 +161,57 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
 
-  --brand-50: #10203a;
-  --brand-100: #16294a;
-  --brand-400: #6ba4ec;
-  --brand-500: #3987e5;
-  --brand-600: #5b9bf2;
-  --brand-700: #86b6ef;
-  --brand-gradient: linear-gradient(135deg, #3987e5 0%, #9085e9 100%);
+  --brand-50: #24163b;
+  --brand-100: #341f57;
+  --brand-400: #b28af8;
+  --brand-500: #9c69f1;
+  --brand-600: #b28af8;
+  --brand-700: #d0b3fb;
+  --brand-gradient: linear-gradient(135deg, #9c69f1 0%, #e35996 100%);
 
-  --surface-page: #0c0e16;
-  --surface-card: #141726;
-  --surface-card-hover: #181c2e;
-  --surface-sunken: #0f1220;
-  --surface-overlay: rgba(3, 4, 8, 0.7);
-  --surface-glass: rgba(20, 23, 38, 0.72);
+  --accent-dashboard-50: #24163b;
+  --accent-dashboard-500: #9c69f1;
+  --accent-dashboard-600: #b28af8;
+
+  --accent-calendar-50: #16223b;
+  --accent-calendar-500: #4d80ef;
+  --accent-calendar-600: #7ba3f4;
+
+  --accent-timeline-50: #14353d;
+  --accent-timeline-500: #46d4f7;
+  --accent-timeline-600: #7ee2f9;
+
+  --accent-tasks-50: #143e31;
+  --accent-tasks-500: #43f9c0;
+  --accent-tasks-600: #79fbd2;
+
+  --accent-reports-50: #3d2215;
+  --accent-reports-500: #f68347;
+  --accent-reports-600: #f9a677;
+
+  --accent-statistics-50: #391927;
+  --accent-statistics-500: #e35996;
+  --accent-statistics-600: #ec84b3;
+
+  --accent-assistant-50: #21153d;
+  --accent-assistant-500: #9164f6;
+  --accent-assistant-600: #ac8bf9;
+  --accent-assistant-gradient: linear-gradient(135deg, #9164f6 0%, #7f79ec 100%);
+
+  --accent-settings-50: #25282c;
+  --accent-settings-500: #8e9bae;
+  --accent-settings-600: #aab5c4;
+
+  --accent-support-50: #1a183a;
+  --accent-support-500: #7f79ec;
+  --accent-support-600: #a29cf2;
+
+  --surface-page: #0d0b16;
+  --surface-card: #17142a;
+  --surface-card-hover: #1c1830;
+  --surface-sunken: #120f20;
+  --surface-overlay: rgba(6, 4, 12, 0.7);
+  --surface-glass: rgba(23, 20, 42, 0.72);
 
   --text-primary: #f4f5fb;
   --text-secondary: #c3c5d8;
@@ -135,8 +219,8 @@
   --text-inverse: #0f1222;
   --text-on-brand: #ffffff;
 
-  --border-subtle: #232739;
-  --border-default: #2c2c2a;
+  --border-subtle: #262238;
+  --border-default: #2f2a42;
   --border-strong: rgba(255, 255, 255, 0.14);
 
   --status-good: #0ca30c;
@@ -177,35 +261,72 @@
   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 24px 50px rgba(0, 0, 0, 0.55);
-  --shadow-focus: 0 0 0 3px rgba(57, 135, 229, 0.4);
+  --shadow-focus: 0 0 0 3px rgba(156, 105, 241, 0.4);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
     color-scheme: dark;
 
-    --brand-50: #10203a;
-    --brand-100: #16294a;
-    --brand-400: #6ba4ec;
-    --brand-500: #3987e5;
-    --brand-600: #5b9bf2;
-    --brand-700: #86b6ef;
-    --brand-gradient: linear-gradient(135deg, #3987e5 0%, #9085e9 100%);
+    --brand-50: #24163b;
+    --brand-100: #341f57;
+    --brand-400: #b28af8;
+    --brand-500: #9c69f1;
+    --brand-600: #b28af8;
+    --brand-700: #d0b3fb;
+    --brand-gradient: linear-gradient(135deg, #9c69f1 0%, #e35996 100%);
 
-    --surface-page: #0c0e16;
-    --surface-card: #141726;
-    --surface-card-hover: #181c2e;
-    --surface-sunken: #0f1220;
-    --surface-overlay: rgba(3, 4, 8, 0.7);
-    --surface-glass: rgba(20, 23, 38, 0.72);
+    --accent-dashboard-50: #24163b;
+    --accent-dashboard-500: #9c69f1;
+    --accent-dashboard-600: #b28af8;
+
+    --accent-calendar-50: #16223b;
+    --accent-calendar-500: #4d80ef;
+    --accent-calendar-600: #7ba3f4;
+
+    --accent-timeline-50: #14353d;
+    --accent-timeline-500: #46d4f7;
+    --accent-timeline-600: #7ee2f9;
+
+    --accent-tasks-50: #143e31;
+    --accent-tasks-500: #43f9c0;
+    --accent-tasks-600: #79fbd2;
+
+    --accent-reports-50: #3d2215;
+    --accent-reports-500: #f68347;
+    --accent-reports-600: #f9a677;
+
+    --accent-statistics-50: #391927;
+    --accent-statistics-500: #e35996;
+    --accent-statistics-600: #ec84b3;
+
+    --accent-assistant-50: #21153d;
+    --accent-assistant-500: #9164f6;
+    --accent-assistant-600: #ac8bf9;
+    --accent-assistant-gradient: linear-gradient(135deg, #9164f6 0%, #7f79ec 100%);
+
+    --accent-settings-50: #25282c;
+    --accent-settings-500: #8e9bae;
+    --accent-settings-600: #aab5c4;
+
+    --accent-support-50: #1a183a;
+    --accent-support-500: #7f79ec;
+    --accent-support-600: #a29cf2;
+
+    --surface-page: #0d0b16;
+    --surface-card: #17142a;
+    --surface-card-hover: #1c1830;
+    --surface-sunken: #120f20;
+    --surface-overlay: rgba(6, 4, 12, 0.7);
+    --surface-glass: rgba(23, 20, 42, 0.72);
 
     --text-primary: #f4f5fb;
     --text-secondary: #c3c5d8;
     --text-muted: #898da3;
     --text-inverse: #0f1222;
 
-    --border-subtle: #232739;
-    --border-default: #2c2c2a;
+    --border-subtle: #262238;
+    --border-default: #2f2a42;
     --border-strong: rgba(255, 255, 255, 0.14);
 
     --chart-series-1: #3987e5;

@@ -34,6 +34,23 @@
   transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
 }
 
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 20px) center, calc(100% - 15px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  color: var(--text-primary);
+  padding-right: 36px;
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: var(--brand-400);
+}
+
 .form-group textarea {
   resize: vertical;
   min-height: 80px;
@@ -43,7 +60,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--brand-500);
-  box-shadow: 0 0 0 3px var(--brand-50);
+  box-shadow: 0 0 0 3px var(--brand-100);
 }
 
 .form-group input::placeholder,
@@ -131,15 +148,19 @@
   border-radius: 50%;
   background: white;
   box-shadow: var(--shadow-xs);
-  transition: transform var(--duration-fast) var(--ease-standard);
+  transition: transform var(--duration-base) var(--ease-spring);
 }
 
 .toggle-switch input:checked + .toggle-switch-track {
-  background: var(--brand-500);
+  background: var(--brand-gradient);
 }
 
 .toggle-switch input:checked + .toggle-switch-track::before {
   transform: translateX(18px);
+}
+
+.toggle-switch:hover .toggle-switch-track::before {
+  box-shadow: var(--shadow-sm);
 }
 
 .toggle-switch input:focus-visible + .toggle-switch-track {
@@ -170,10 +191,11 @@
   gap: 6px;
   padding: 4px 6px 4px 10px;
   border-radius: var(--radius-pill);
-  background: var(--surface-sunken);
+  background: var(--brand-50);
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--brand-600);
+  animation: fade-in-up var(--duration-fast) var(--ease-standard);
 }
 
 .tag-chip button {
@@ -183,11 +205,18 @@
   height: 16px;
   border: 0;
   border-radius: 50%;
-  background: var(--border-default);
-  color: var(--text-primary);
+  background: var(--brand-100);
+  color: var(--brand-600);
   cursor: pointer;
   font-size: 11px;
   line-height: 1;
+  transition: background-color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+}
+
+.tag-chip button:hover {
+  background: var(--brand-500);
+  color: white;
+  transform: scale(1.1);
 }
 
 .tag-input input {
@@ -222,11 +251,13 @@
 }
 
 .color-swatch-option:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .color-swatch-option.selected {
-  border-color: var(--text-primary);
+  border-color: var(--surface-card);
+  box-shadow: 0 0 0 2px var(--text-primary), var(--shadow-sm);
+  transform: scale(1.1);
 }
 
 /* Range slider (completion %) */

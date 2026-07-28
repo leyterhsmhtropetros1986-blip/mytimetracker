@@ -44,7 +44,12 @@
   background: var(--brand-gradient);
   font-size: 18px;
   flex-shrink: 0;
-  box-shadow: 0 6px 16px rgba(42, 120, 214, 0.3);
+  box-shadow: 0 6px 16px rgba(100, 21, 234, 0.35);
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.sidebar-brand:hover .sidebar-logo {
+  transform: rotate(-8deg) scale(1.06);
 }
 
 .sidebar-brand-name {
@@ -94,7 +99,8 @@
   font-size: 14px;
   text-align: left;
   white-space: nowrap;
-  transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
 }
 
 .sidebar-link-icon {
@@ -103,16 +109,80 @@
   width: 22px;
   flex-shrink: 0;
   font-size: 17px;
+  transition: transform var(--duration-fast) var(--ease-spring);
 }
 
 .sidebar-link:hover {
   background: var(--surface-sunken);
   color: var(--text-primary);
+  transform: translateX(2px);
+}
+
+.sidebar-link:hover .sidebar-link-icon {
+  transform: scale(1.12);
+}
+
+/* Κάθε module ορίζει το δικό του accent (χρησιμοποιείται μόνο όταν ο σύνδεσμος
+   είναι active) — Dashboard=μωβ, Ημερολόγιο=μπλε, Timeline=κυανό, Tasks=πράσινο,
+   Reports=πορτοκαλί, Στατιστικά=ροζ, AI Βοηθός=βιολετί, Ρυθμίσεις=ουδέτερο,
+   Υποστήριξη=indigo. */
+.sidebar-link[data-route="dashboard"] {
+  --link-accent-50: var(--accent-dashboard-50);
+  --link-accent-500: var(--accent-dashboard-500);
+  --link-accent-600: var(--accent-dashboard-600);
+}
+
+.sidebar-link[data-route="calendar"] {
+  --link-accent-50: var(--accent-calendar-50);
+  --link-accent-500: var(--accent-calendar-500);
+  --link-accent-600: var(--accent-calendar-600);
+}
+
+.sidebar-link[data-route="timeline"] {
+  --link-accent-50: var(--accent-timeline-50);
+  --link-accent-500: var(--accent-timeline-500);
+  --link-accent-600: var(--accent-timeline-600);
+}
+
+.sidebar-link[data-route="tasks"] {
+  --link-accent-50: var(--accent-tasks-50);
+  --link-accent-500: var(--accent-tasks-500);
+  --link-accent-600: var(--accent-tasks-600);
+}
+
+.sidebar-link[data-route="reports"] {
+  --link-accent-50: var(--accent-reports-50);
+  --link-accent-500: var(--accent-reports-500);
+  --link-accent-600: var(--accent-reports-600);
+}
+
+.sidebar-link[data-route="statistics"] {
+  --link-accent-50: var(--accent-statistics-50);
+  --link-accent-500: var(--accent-statistics-500);
+  --link-accent-600: var(--accent-statistics-600);
+}
+
+.sidebar-link[data-route="assistant"] {
+  --link-accent-50: var(--accent-assistant-50);
+  --link-accent-500: var(--accent-assistant-500);
+  --link-accent-600: var(--accent-assistant-600);
+}
+
+.sidebar-link[data-route="settings"] {
+  --link-accent-50: var(--accent-settings-50);
+  --link-accent-500: var(--accent-settings-500);
+  --link-accent-600: var(--accent-settings-600);
+}
+
+.sidebar-link[data-route="support"] {
+  --link-accent-50: var(--accent-support-50);
+  --link-accent-500: var(--accent-support-500);
+  --link-accent-600: var(--accent-support-600);
 }
 
 .sidebar-link.active {
-  background: var(--brand-50);
-  color: var(--brand-600);
+  background: var(--link-accent-50, var(--brand-50));
+  color: var(--link-accent-600, var(--brand-600));
 }
 
 .sidebar-link.active::before {
@@ -123,7 +193,7 @@
   bottom: 8px;
   width: 3px;
   border-radius: var(--radius-pill);
-  background: var(--brand-gradient);
+  background: var(--link-accent-500, var(--brand-500));
 }
 
 .sidebar-link-badge {
@@ -163,10 +233,14 @@
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
+  transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
 }
 
 .sidebar-collapse-button:hover {
-  background: var(--surface-sunken);
+  background: var(--brand-50);
+  border-color: var(--brand-100);
+  color: var(--brand-600);
 }
 
 .sidebar-collapse-icon {
@@ -262,7 +336,7 @@
 
 .topbar-search input:focus {
   background: var(--surface-card);
-  box-shadow: 0 0 0 3px var(--brand-50);
+  box-shadow: 0 0 0 3px var(--brand-100);
 }
 
 .topbar-search-kbd {
@@ -300,6 +374,13 @@
   border: 0;
   cursor: pointer;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(100, 21, 234, 0.35);
+  transition: transform var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.topbar-avatar:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(100, 21, 234, 0.45);
 }
 
 /* Popover πάνελ κοινό (notifications / avatar) */
@@ -322,7 +403,7 @@
   background: var(--surface-card);
   box-shadow: var(--shadow-lg);
   padding: var(--space-3);
-  animation: modal-pop-in var(--duration-fast) var(--ease-standard);
+  animation: modal-pop-in var(--duration-base) var(--ease-spring);
 }
 
 .popover-panel[hidden] {
@@ -345,10 +426,12 @@
   gap: 10px;
   padding: 10px 8px;
   border-radius: var(--radius-md);
+  transition: background-color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
 }
 
 .notification-item:hover {
-  background: var(--surface-sunken);
+  background: var(--brand-50);
+  transform: translateX(2px);
 }
 
 .notification-icon {
@@ -380,10 +463,13 @@
   font-size: 13px;
   font-weight: 600;
   text-align: left;
+  transition: background-color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
 }
 
 .avatar-menu-item:hover {
-  background: var(--surface-sunken);
+  background: var(--brand-50);
+  color: var(--brand-600);
+  transform: translateX(2px);
 }
 
 /* Contextual toolbar (σύντομο πλαίσιο σελίδας + page-specific actions) */
@@ -420,9 +506,14 @@
   margin: var(--space-4) var(--space-6) 0;
   padding: 12px 18px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #0f1222 0%, #232852 100%);
+  background: linear-gradient(135deg, #150f28 0%, #3d1a72 60%, #6b1f7a 100%);
   color: white;
   box-shadow: var(--shadow-md);
+  transition: box-shadow var(--duration-base) var(--ease-standard);
+}
+
+.quick-timer-bar.is-running {
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(156, 105, 241, 0.4);
 }
 
 .quick-timer-info {
@@ -478,13 +569,24 @@
 }
 
 .quick-timer-select {
+  appearance: none;
+  -webkit-appearance: none;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.08);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 14px) center, calc(100% - 9px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
   color: white;
   border-radius: var(--radius-sm);
   min-height: 34px;
-  padding: 4px 8px;
+  padding: 4px 20px 4px 8px;
   font-size: 12px;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.quick-timer-select:hover {
+  background-color: rgba(255, 255, 255, 0.14);
 }
 
 .quick-timer-display {
@@ -567,10 +669,15 @@
   background: var(--brand-gradient);
   color: white;
   font-size: 26px;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 26px rgba(100, 21, 234, 0.4);
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  transition: transform var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.fab-button:active {
+  transform: scale(0.92);
 }
 
 /* Mobile bottom navigation */
@@ -607,12 +714,34 @@
   cursor: pointer;
   font-size: 10px;
   font-weight: 700;
+  transition: color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-spring);
 }
 
 .mobile-bottom-nav-link .sidebar-link-icon {
   font-size: 19px;
 }
 
+.mobile-bottom-nav-link[data-route="dashboard"] {
+  --link-accent-500: var(--accent-dashboard-500);
+}
+
+.mobile-bottom-nav-link[data-route="calendar"] {
+  --link-accent-500: var(--accent-calendar-500);
+}
+
+.mobile-bottom-nav-link[data-route="tasks"] {
+  --link-accent-500: var(--accent-tasks-500);
+}
+
+.mobile-bottom-nav-link[data-route="statistics"] {
+  --link-accent-500: var(--accent-statistics-500);
+}
+
+.mobile-bottom-nav-link[data-route="settings"] {
+  --link-accent-500: var(--accent-settings-500);
+}
+
 .mobile-bottom-nav-link.active {
-  color: var(--brand-500);
+  color: var(--link-accent-500, var(--brand-500));
+  transform: translateY(-2px);
 }
