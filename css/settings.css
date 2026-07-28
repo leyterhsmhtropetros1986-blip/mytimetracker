@@ -174,30 +174,3 @@
   font-size: 16px;
 }
 
-.shortcut-list {
-  display: grid;
-  gap: 8px;
-}
-
-.shortcut-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.shortcut-row kbd {
-  display: inline-grid;
-  place-items: center;
-  min-width: 28px;
-  height: 26px;
-  padding: 0 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-default);
-  background: var(--surface-card);
-  box-shadow: 0 1px 0 var(--border-default);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-primary);
-}

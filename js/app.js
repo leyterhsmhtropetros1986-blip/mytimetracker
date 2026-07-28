@@ -27,7 +27,7 @@ const ROUTE_META = {
   statistics: { title: "Στατιστικά", icon: "📊", subtitle: "Βαθιά ανάλυση της απόδοσής σου" },
   assistant: { title: "AI Βοηθός", icon: "✨", subtitle: "Πρόγραμμα ημέρας με τη βοήθεια του βοηθού" },
   settings: { title: "Ρυθμίσεις", icon: "⚙️", subtitle: "Κατηγορίες, στόχοι και δεδομένα" },
-  support: { title: "Υποστήριξη", icon: "💬", subtitle: "Συχνές ερωτήσεις και συντομεύσεις" }
+  support: { title: "Υποστήριξη", icon: "💬", subtitle: "Συχνές ερωτήσεις για την εφαρμογή" }
 };
 
 const ROUTE_RENDERERS = {
