@@ -3,6 +3,7 @@
 import * as state from "./state.js";
 import { STATUSES, PRIORITIES, statusLabel, priorityLabel } from "./state.js";
 import * as ui from "./ui.js";
+import { SWATCH_COLORS, buildSwatchPicker } from "./categories.js";
 import {
   formatDateForInput,
   formatDuration,
@@ -20,6 +21,13 @@ let entryDateInput;
 let entryTaskNameInput;
 let entryDescriptionInput;
 let entryCategorySelect;
+let entryAddCategoryButton;
+let entryNewCategoryRow;
+let entryNewCategoryNameInput;
+let entryNewCategoryColorPicker;
+let entryNewCategoryIconInput;
+let entryNewCategorySaveButton;
+let entryNewCategoryCancelButton;
 let entryStatusSelect;
 let entryPrioritySelect;
 let entryLocationInput;
@@ -45,6 +53,7 @@ let selectedDayTotalElement;
 let selectedDayCountElement;
 
 let currentTags = [];
+let entryNewCategorySelectedColor = SWATCH_COLORS[0];
 
 export function init() {
   entryModal = document.getElementById("entry-modal");
@@ -54,6 +63,13 @@ export function init() {
   entryTaskNameInput = document.getElementById("entry-task-name");
   entryDescriptionInput = document.getElementById("entry-description");
   entryCategorySelect = document.getElementById("entry-category");
+  entryAddCategoryButton = document.getElementById("entry-add-category-button");
+  entryNewCategoryRow = document.getElementById("entry-new-category-row");
+  entryNewCategoryNameInput = document.getElementById("entry-new-category-name");
+  entryNewCategoryColorPicker = document.getElementById("entry-new-category-color-picker");
+  entryNewCategoryIconInput = document.getElementById("entry-new-category-icon");
+  entryNewCategorySaveButton = document.getElementById("entry-new-category-save");
+  entryNewCategoryCancelButton = document.getElementById("entry-new-category-cancel");
   entryStatusSelect = document.getElementById("entry-status");
   entryPrioritySelect = document.getElementById("entry-priority");
   entryLocationInput = document.getElementById("entry-location");
@@ -115,6 +131,53 @@ export function init() {
   });
 
   entryTagsTextInput.addEventListener("blur", commitTagFromInput);
+
+  entryAddCategoryButton.addEventListener("click", openNewCategoryRow);
+  entryNewCategoryCancelButton.addEventListener("click", closeNewCategoryRow);
+  entryNewCategorySaveButton.addEventListener("click", handleSaveNewCategory);
+
+  entryNewCategoryNameInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSaveNewCategory();
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      closeNewCategoryRow();
+    }
+  });
+}
+
+function openNewCategoryRow() {
+  entryNewCategorySelectedColor = SWATCH_COLORS[0];
+  buildSwatchPicker(entryNewCategoryColorPicker, entryNewCategorySelectedColor, (color) => {
+    entryNewCategorySelectedColor = color;
+  });
+
+  entryNewCategoryRow.hidden = false;
+  entryNewCategoryNameInput.focus();
+}
+
+function closeNewCategoryRow() {
+  entryNewCategoryRow.hidden = true;
+  entryNewCategoryNameInput.value = "";
+  entryNewCategoryIconInput.value = "";
+}
+
+function handleSaveNewCategory() {
+  const name = entryNewCategoryNameInput.value.trim();
+  const icon = entryNewCategoryIconInput.value.trim() || "🏷️";
+
+  const result = state.addCategory({ name, color: entryNewCategorySelectedColor, icon });
+
+  if (!result.ok) {
+    ui.toast(result.error, "error");
+    return;
+  }
+
+  refreshCategoryOptions();
+  entryCategorySelect.value = name;
+  closeNewCategoryRow();
+  ui.toast(`Η κατηγορία "${name}" προστέθηκε.`, "success");
 }
 
 function populateSelect(selectElement, options) {
@@ -196,6 +259,7 @@ function openNewEntryModal() {
   entryTaskNameInput.value = "";
   entryDescriptionInput.value = "";
   refreshCategoryOptions();
+  closeNewCategoryRow();
   entryCategorySelect.value = state.DEFAULT_CATEGORY;
   entryStatusSelect.value = state.DEFAULT_STATUS;
   entryPrioritySelect.value = state.DEFAULT_PRIORITY;
@@ -232,6 +296,7 @@ export function openEditEntryModal(entryId) {
   entryTaskNameInput.value = entry.taskName;
   entryDescriptionInput.value = entry.description || "";
   refreshCategoryOptions();
+  closeNewCategoryRow();
   entryCategorySelect.value = entry.category;
   entryStatusSelect.value = entry.status;
   entryPrioritySelect.value = entry.priority || state.DEFAULT_PRIORITY;

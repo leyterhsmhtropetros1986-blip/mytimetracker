@@ -82,6 +82,11 @@
   font-variant-numeric: tabular-nums;
 }
 
+.history-cell-actions {
+  display: flex;
+  gap: 8px;
+}
+
 /* Entries list (ημέρα στο calendar) */
 
 .entries-list {

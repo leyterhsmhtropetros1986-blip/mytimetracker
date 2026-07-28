@@ -70,7 +70,7 @@
 
         <button type="button" class="sidebar-link" data-route="dashboard">
           <span class="sidebar-link-icon" aria-hidden="true">🏠</span>
-          <span class="sidebar-link-label">Dashboard</span>
+          <span class="sidebar-link-label">Πίνακας Ελέγχου</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="calendar">
@@ -80,17 +80,17 @@
 
         <button type="button" class="sidebar-link" data-route="timeline">
           <span class="sidebar-link-icon" aria-hidden="true">🧭</span>
-          <span class="sidebar-link-label">Timeline</span>
+          <span class="sidebar-link-label">Χρονογραμμή</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="tasks">
           <span class="sidebar-link-icon" aria-hidden="true">✅</span>
-          <span class="sidebar-link-label">Tasks</span>
+          <span class="sidebar-link-label">Εργασίες</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="reports">
           <span class="sidebar-link-icon" aria-hidden="true">📄</span>
-          <span class="sidebar-link-label">Reports</span>
+          <span class="sidebar-link-label">Αναφορές</span>
         </button>
 
         <button type="button" class="sidebar-link" data-route="statistics">
@@ -115,6 +115,11 @@
           <span class="sidebar-link-label">Υποστήριξη</span>
         </button>
 
+        <button type="button" id="sidebar-guide-button" class="sidebar-link sidebar-link-mobile-only">
+          <span class="sidebar-link-icon" aria-hidden="true">💡</span>
+          <span class="sidebar-link-label">Οδηγίες</span>
+        </button>
+
       </nav>
 
       <div class="sidebar-footer">
@@ -135,7 +140,7 @@
         </button>
 
         <div class="topbar-titles">
-          <h1 id="page-title">Dashboard</h1>
+          <h1 id="page-title">Πίνακας Ελέγχου</h1>
           <p id="current-date" class="topbar-date"></p>
         </div>
 
@@ -499,7 +504,7 @@
             <div class="section-heading">
               <div>
                 <p class="eyebrow">Όλα τα tasks</p>
-                <h2>Tasks</h2>
+                <h2>Εργασίες</h2>
               </div>
             </div>
 
@@ -572,9 +577,9 @@
             <div class="section-heading">
               <div>
                 <p class="eyebrow">Αναφορές</p>
-                <h2>Reports</h2>
+                <h2>Αναφορές</h2>
                 <p class="section-description">
-                  Χρησιμοποιεί τα ίδια φίλτρα με τη σελίδα Tasks. Αν υπάρχει ενεργό φίλτρο,
+                  Χρησιμοποιεί τα ίδια φίλτρα με τη σελίδα Εργασίες. Αν υπάρχει ενεργό φίλτρο,
                   εξάγονται μόνο τα φιλτραρισμένα αποτελέσματα — αλλιώς όλες οι καταχωρήσεις.
                 </p>
               </div>
@@ -737,8 +742,6 @@
                   διαστημάτων, χωρίς επικαλύψεις με ό,τι έχεις ήδη καταχωρήσει.
                 </p>
               </div>
-
-              <span class="assistant-badge">Τοπικά · χωρίς εξωτερικό API</span>
             </div>
 
             <div class="assistant-message-thread" id="assistant-message-thread" aria-live="polite">
@@ -747,11 +750,23 @@
                 <span class="assistant-chat-avatar" aria-hidden="true">✨</span>
                 <div class="assistant-chat-content">
                   Γεια σου! Πες μου τι πρέπει να κάνεις σήμερα και θα σου προτείνω πρόγραμμα
-                  με βάση τον διαθέσιμο χρόνο σου.
+                  με βάση τον διαθέσιμο χρόνο σου. Μπορείς να γράψεις πιο κάτω, π.χ.
+                  «Καθαρισμός σπιτιού 2 ώρες».
                 </div>
               </div>
 
             </div>
+
+            <form class="assistant-chat-composer" id="assistant-chat-composer">
+              <input
+                type="text"
+                id="assistant-chat-input"
+                placeholder="Γράψε ένα task, π.χ. «Αναφορά πωλήσεων 1.5 ώρα»"
+                aria-label="Γράψε ένα task στον βοηθό"
+                autocomplete="off"
+              >
+              <button type="submit" class="assistant-chat-send" aria-label="Αποστολή">➤</button>
+            </form>
 
             <div class="form-grid">
               <div class="form-group">
@@ -991,7 +1006,7 @@
 
               <details class="faq-item">
                 <summary>Μπορώ να εξάγω τα δεδομένα μου;</summary>
-                <p>Ναι — από τις Ρυθμίσεις (JSON) ή από τη σελίδα Reports (Excel, PDF, CSV, εκτύπωση).</p>
+                <p>Ναι — από τις Ρυθμίσεις (JSON) ή από τη σελίδα Αναφορές (Excel, PDF, CSV, εκτύπωση).</p>
               </details>
             </div>
           </article>
@@ -1019,13 +1034,13 @@
   <nav class="mobile-bottom-nav" aria-label="Πλοήγηση κινητού">
     <div class="mobile-bottom-nav-list">
       <button type="button" class="mobile-bottom-nav-link" data-route="dashboard">
-        <span class="sidebar-link-icon" aria-hidden="true">🏠</span>Home
+        <span class="sidebar-link-icon" aria-hidden="true">🏠</span>Αρχική
       </button>
       <button type="button" class="mobile-bottom-nav-link" data-route="calendar">
         <span class="sidebar-link-icon" aria-hidden="true">📅</span>Ημ/νιο
       </button>
       <button type="button" class="mobile-bottom-nav-link" data-route="tasks">
-        <span class="sidebar-link-icon" aria-hidden="true">✅</span>Tasks
+        <span class="sidebar-link-icon" aria-hidden="true">✅</span>Εργασίες
       </button>
       <button type="button" class="mobile-bottom-nav-link" data-route="statistics">
         <span class="sidebar-link-icon" aria-hidden="true">📊</span>Στατ.
@@ -1087,7 +1102,18 @@
 
         <div class="form-group">
           <label for="entry-category">Κατηγορία</label>
-          <select id="entry-category"></select>
+          <div class="entry-category-row">
+            <select id="entry-category"></select>
+            <button type="button" id="entry-add-category-button" class="icon-button" aria-label="Νέα κατηγορία" title="Νέα κατηγορία">➕</button>
+          </div>
+
+          <div id="entry-new-category-row" class="entry-new-category-row" hidden>
+            <input type="text" id="entry-new-category-name" placeholder="Όνομα κατηγορίας" aria-label="Όνομα νέας κατηγορίας">
+            <div class="color-swatch-picker" id="entry-new-category-color-picker"></div>
+            <input type="text" id="entry-new-category-icon" placeholder="🏷️" maxlength="4" aria-label="Εικονίδιο (emoji)" style="width:52px; text-align:center;">
+            <button type="button" id="entry-new-category-save" class="button button-primary button-sm">Προσθήκη</button>
+            <button type="button" id="entry-new-category-cancel" class="button button-light button-sm">Άκυρο</button>
+          </div>
         </div>
 
         <div class="form-group">
@@ -1216,7 +1242,7 @@
         <article class="guide-item">
           <span class="guide-item-icon kpi-icon" data-accent="dashboard" aria-hidden="true">🏠</span>
           <div>
-            <h3>Dashboard</h3>
+            <h3>Πίνακας Ελέγχου</h3>
             <p>Συνολική εικόνα της παραγωγικότητάς σας: KPIs, γράφημα ωρών ανά ημέρα, κατανομή ανά κατηγορία και πρόσφατη δραστηριότητα.</p>
           </div>
         </article>
@@ -1232,7 +1258,7 @@
         <article class="guide-item">
           <span class="guide-item-icon kpi-icon" data-accent="timeline" aria-hidden="true">🧭</span>
           <div>
-            <h3>Timeline</h3>
+            <h3>Χρονογραμμή</h3>
             <p>Χρονολογική προβολή μιας ημέρας — βλέπετε πώς κατανεμήθηκε ο χρόνος σας ώρα προς ώρα.</p>
           </div>
         </article>
@@ -1240,7 +1266,7 @@
         <article class="guide-item">
           <span class="guide-item-icon kpi-icon" data-accent="tasks" aria-hidden="true">✅</span>
           <div>
-            <h3>Tasks</h3>
+            <h3>Εργασίες</h3>
             <p>Πλήρης λίστα καταχωρήσεων με φίλτρα ημερομηνίας, ώρας, κατηγορίας, status, προτεραιότητας και ετικέτας.</p>
           </div>
         </article>
@@ -1248,7 +1274,7 @@
         <article class="guide-item">
           <span class="guide-item-icon kpi-icon" data-accent="reports" aria-hidden="true">📄</span>
           <div>
-            <h3>Reports</h3>
+            <h3>Αναφορές</h3>
             <p>Συγκεντρωτικές αναφορές με δυνατότητα εξαγωγής σε Excel, PDF, CSV ή απευθείας εκτύπωση.</p>
           </div>
         </article>

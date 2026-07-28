@@ -103,6 +103,10 @@
     transform var(--duration-fast) var(--ease-standard);
 }
 
+.sidebar-link.sidebar-link-mobile-only {
+  display: none;
+}
+
 .sidebar-link-icon {
   display: grid;
   place-items: center;

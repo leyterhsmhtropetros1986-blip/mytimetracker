@@ -3,7 +3,7 @@
 import * as state from "./state.js";
 import * as ui from "./ui.js";
 
-const SWATCH_COLORS = [
+export const SWATCH_COLORS = [
   "#2a78d6",
   "#eb6834",
   "#1baf7a",
@@ -48,7 +48,7 @@ export function init() {
   });
 }
 
-function buildSwatchPicker(container, selectedColor, onSelect) {
+export function buildSwatchPicker(container, selectedColor, onSelect) {
   container.innerHTML = "";
 
   SWATCH_COLORS.forEach((color) => {

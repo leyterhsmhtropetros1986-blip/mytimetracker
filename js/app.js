@@ -19,11 +19,11 @@ import * as settingsModule from "./settings.js";
 import { formatLongDate, isoWeekNumber } from "./utils.js";
 
 const ROUTE_META = {
-  dashboard: { title: "Dashboard", icon: "🏠", subtitle: "Επισκόπηση της παραγωγικότητάς σου" },
+  dashboard: { title: "Πίνακας Ελέγχου", icon: "🏠", subtitle: "Επισκόπηση της παραγωγικότητάς σου" },
   calendar: { title: "Ημερολόγιο", icon: "📅", subtitle: "Δες και προγραμμάτισε τον χρόνο σου ανά ημέρα" },
-  timeline: { title: "Timeline", icon: "🧭", subtitle: "Χρονολογική προβολή της επιλεγμένης ημέρας" },
-  tasks: { title: "Tasks", icon: "✅", subtitle: "Όλα τα tasks με φίλτρα και αναζήτηση" },
-  reports: { title: "Reports", icon: "📄", subtitle: "Σύνοψη περιόδου και εξαγωγή δεδομένων" },
+  timeline: { title: "Χρονογραμμή", icon: "🧭", subtitle: "Χρονολογική προβολή της επιλεγμένης ημέρας" },
+  tasks: { title: "Εργασίες", icon: "✅", subtitle: "Όλα τα tasks με φίλτρα και αναζήτηση" },
+  reports: { title: "Αναφορές", icon: "📄", subtitle: "Σύνοψη περιόδου και εξαγωγή δεδομένων" },
   statistics: { title: "Στατιστικά", icon: "📊", subtitle: "Βαθιά ανάλυση της απόδοσής σου" },
   assistant: { title: "AI Βοηθός", icon: "✨", subtitle: "Πρόγραμμα ημέρας με τη βοήθεια του βοηθού" },
   settings: { title: "Ρυθμίσεις", icon: "⚙️", subtitle: "Κατηγορίες, στόχοι και δεδομένα" },

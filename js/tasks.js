@@ -195,9 +195,31 @@ function createTaskRow(entry) {
     openEditEntryModal(entry.id);
   });
 
-  actionsCell.append(editButton);
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.className = "entry-action-button delete";
+  deleteButton.textContent = "Διαγραφή";
+  deleteButton.addEventListener("click", () => handleDeleteTask(entry));
+
+  actionsCell.append(editButton, deleteButton);
 
   row.append(dateCell, taskCell, badgesCell, durationCell, actionsCell);
 
   return row;
+}
+
+async function handleDeleteTask(entry) {
+  const confirmed = await ui.confirmDialog({
+    title: "Διαγραφή task",
+    message: `Να διαγραφεί το task "${entry.taskName}";`,
+    confirmText: "Διαγραφή",
+    danger: true
+  });
+
+  if (!confirmed) {
+    return;
+  }
+
+  state.deleteEntry(entry.id);
+  ui.toast("Το task διαγράφηκε.", "success");
 }

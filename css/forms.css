@@ -14,6 +14,38 @@
   grid-column: 1 / -1;
 }
 
+.entry-category-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.entry-category-row select {
+  flex: 1;
+}
+
+.entry-new-category-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 10px;
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+}
+
+.entry-new-category-row input[type="text"] {
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+  flex: 1;
+  min-width: 100px;
+}
+
 .form-group label {
   font-weight: 650;
   font-size: 13px;

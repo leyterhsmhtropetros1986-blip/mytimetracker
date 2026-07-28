@@ -30,6 +30,8 @@ let clearAssistantButton;
 let savePlanButton;
 
 let messageThread;
+let chatComposer;
+let chatInput;
 let assistantPlanWrapper;
 let assistantPlanList;
 let assistantUnfitWrapper;
@@ -58,6 +60,8 @@ export function init() {
   savePlanButton = document.getElementById("save-plan-button");
 
   messageThread = document.getElementById("assistant-message-thread");
+  chatComposer = document.getElementById("assistant-chat-composer");
+  chatInput = document.getElementById("assistant-chat-input");
   assistantPlanWrapper = document.getElementById("assistant-plan-wrapper");
   assistantPlanList = document.getElementById("assistant-plan-list");
   assistantUnfitWrapper = document.getElementById("assistant-unfit-wrapper");
@@ -80,6 +84,11 @@ export function init() {
   generatePlanButton.addEventListener("click", generateAssistantPlan);
   clearAssistantButton.addEventListener("click", clearAssistant);
   savePlanButton.addEventListener("click", saveGeneratedPlan);
+
+  chatComposer.addEventListener("submit", (event) => {
+    event.preventDefault();
+    handleChatSubmit();
+  });
 }
 
 function populatePrioritySelect() {
@@ -146,6 +155,80 @@ function addAssistantTask() {
 
   resetPlan();
   assistantTaskNameInput.focus();
+}
+
+/* Το \b δεν δουλεύει με ελληνικούς χαρακτήρες (το \w του JS είναι ASCII-only) —
+   χρησιμοποιούμε \p{L} lookahead αντί γι' αυτό. */
+const DURATION_PATTERN = /(\d+(?:[.,]\d+)?)\s*(ώρες|ώρα|ωρών|ωρες|ωρα|h|λεπτά|λεπτα|λεπτό|λεπτο|min)(?!\p{L})/iu;
+
+/** Απλή τοπική αναγνώριση ελεύθερου κειμένου: εξάγει διάρκεια και κατηγορία, χωρίς εξωτερικό API. */
+function parseFreeTextTask(text) {
+  let taskName = text.trim();
+  let hours = 1;
+
+  const match = taskName.match(DURATION_PATTERN);
+
+  if (match) {
+    const rawNumber = Number(match[1].replace(",", "."));
+    const isMinutes = match[2].toLowerCase().startsWith("λεπτ") || match[2].toLowerCase() === "min";
+    hours = isMinutes ? rawNumber / 60 : rawNumber;
+    taskName = (taskName.slice(0, match.index) + taskName.slice(match.index + match[0].length)).trim();
+  }
+
+  taskName = taskName.replace(/^[,\-–\s]+|[,\-–\s]+$/g, "").trim() || text.trim();
+
+  const matchedCategory = state
+    .getCategories()
+    .find((category) => taskName.toLowerCase().includes(category.name.toLowerCase()));
+
+  return {
+    taskName,
+    hours: hours > 0 ? hours : 1,
+    category: matchedCategory ? matchedCategory.name : state.DEFAULT_CATEGORY
+  };
+}
+
+function handleChatSubmit() {
+  const text = chatInput.value.trim();
+
+  if (!text) {
+    return;
+  }
+
+  addUserMessage(text);
+  chatInput.value = "";
+
+  const parsed = parseFreeTextTask(text);
+  const requestedMinutes = Math.round(parsed.hours * 60);
+
+  state.addAssistantTask({
+    taskName: parsed.taskName,
+    category: parsed.category,
+    requestedMinutes,
+    priority: "medium"
+  });
+
+  refreshCategoryOptions();
+  resetPlan();
+
+  addBotMessage(
+    `Πρόσθεσα «${parsed.taskName}» (${formatMinutes(requestedMinutes)}, ${parsed.category}) στη λίστα ✅ ` +
+      `Γράψε κι άλλο ή πάτα «Πρότεινε πρόγραμμα» όταν είσαι έτοιμος/η.`,
+    "success"
+  );
+}
+
+function addUserMessage(message) {
+  const bubble = document.createElement("div");
+  bubble.className = "assistant-chat-bubble assistant-chat-bubble-user";
+
+  const content = document.createElement("div");
+  content.className = "assistant-chat-content";
+  content.textContent = message;
+
+  bubble.append(content);
+  messageThread.append(bubble);
+  messageThread.scrollTop = messageThread.scrollHeight;
 }
 
 export function render() {
