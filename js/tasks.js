@@ -8,6 +8,8 @@ import { formatShortDate, formatDuration, parseDateInput, weekdayName, debounce 
 
 let fromDateInput;
 let toDateInput;
+let fromTimeInput;
+let toTimeInput;
 let categorySelect;
 let statusSelect;
 let prioritySelect;
@@ -22,6 +24,8 @@ let tasksEmptyState;
 export function init() {
   fromDateInput = document.getElementById("tasks-from-date");
   toDateInput = document.getElementById("tasks-to-date");
+  fromTimeInput = document.getElementById("tasks-from-time");
+  toTimeInput = document.getElementById("tasks-to-time");
   categorySelect = document.getElementById("tasks-category");
   statusSelect = document.getElementById("tasks-status");
   prioritySelect = document.getElementById("tasks-priority");
@@ -38,6 +42,8 @@ export function init() {
 
   fromDateInput.addEventListener("change", () => state.setHistoryFilters({ fromDate: fromDateInput.value }));
   toDateInput.addEventListener("change", () => state.setHistoryFilters({ toDate: toDateInput.value }));
+  fromTimeInput.addEventListener("change", () => state.setHistoryFilters({ fromTime: fromTimeInput.value }));
+  toTimeInput.addEventListener("change", () => state.setHistoryFilters({ toTime: toTimeInput.value }));
   categorySelect.addEventListener("change", () => state.setHistoryFilters({ category: categorySelect.value }));
   statusSelect.addEventListener("change", () => state.setHistoryFilters({ status: statusSelect.value }));
   prioritySelect.addEventListener("change", () => state.setHistoryFilters({ priority: prioritySelect.value }));
@@ -48,7 +54,17 @@ export function init() {
   );
 
   resetButton.addEventListener("click", () => {
-    state.setHistoryFilters({ fromDate: "", toDate: "", category: "", status: "", priority: "", tag: "", search: "" });
+    state.setHistoryFilters({
+      fromDate: "",
+      toDate: "",
+      fromTime: "",
+      toTime: "",
+      category: "",
+      status: "",
+      priority: "",
+      tag: "",
+      search: ""
+    });
   });
 }
 
@@ -90,6 +106,8 @@ export function render() {
 
   fromDateInput.value = filters.fromDate;
   toDateInput.value = filters.toDate;
+  fromTimeInput.value = filters.fromTime;
+  toTimeInput.value = filters.toTime;
   categorySelect.value = filters.category;
   statusSelect.value = filters.status;
   prioritySelect.value = filters.priority;

@@ -320,4 +320,21 @@ export function initShell() {
   });
 
   registerPopover(document.getElementById("avatar-button"), document.getElementById("avatar-menu"));
+
+  initGuideModal();
+}
+
+/* =========================
+   Modal οδηγιών χρήσης ("Πώς λειτουργεί")
+========================= */
+
+function initGuideModal() {
+  const guideModal = document.getElementById("guide-modal");
+  const guideButton = document.getElementById("guide-button");
+  const closeGuideButton = document.getElementById("close-guide-modal-button");
+
+  wireModalDismissal(guideModal);
+
+  guideButton.addEventListener("click", () => openModal(guideModal));
+  closeGuideButton.addEventListener("click", () => closeModal(guideModal));
 }

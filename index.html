@@ -157,6 +157,10 @@
 
         <div class="topbar-actions">
 
+          <button type="button" id="guide-button" class="icon-button" aria-label="Οδηγίες χρήσης">
+            💡
+          </button>
+
           <button type="button" id="theme-toggle-button" class="icon-button" aria-pressed="false" aria-label="Εναλλαγή θέματος">
             🌙
           </button>
@@ -508,6 +512,16 @@
               <div class="form-group">
                 <label for="tasks-to-date">Έως ημερομηνία</label>
                 <input type="date" id="tasks-to-date">
+              </div>
+
+              <div class="form-group">
+                <label for="tasks-from-time">Από ώρα</label>
+                <input type="time" id="tasks-from-time">
+              </div>
+
+              <div class="form-group">
+                <label for="tasks-to-time">Έως ώρα</label>
+                <input type="time" id="tasks-to-time">
               </div>
 
               <div class="form-group">
@@ -1135,6 +1149,108 @@
       <div class="modal-actions">
         <button id="save-entry-button" class="button button-primary" type="button">Αποθήκευση</button>
         <button id="cancel-modal-button" class="button button-light" type="button">Ακύρωση</button>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- Modal οδηγιών χρήσης -->
+  <div id="guide-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-modal="true"></div>
+
+    <section class="modal-content modal-content-wide" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title">
+
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">Γρήγορος οδηγός</p>
+          <h2 id="guide-modal-title">Πώς λειτουργεί το TimeTracker</h2>
+        </div>
+
+        <button id="close-guide-modal-button" class="icon-button" type="button" aria-label="Κλείσιμο" data-close-modal="true">×</button>
+      </div>
+
+      <p class="guide-intro">Μια σύντομη περιγραφή κάθε ενότητας, ώστε να βρίσκετε αμέσως αυτό που χρειάζεστε.</p>
+
+      <div class="guide-grid">
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="dashboard" aria-hidden="true">🏠</span>
+          <div>
+            <h3>Dashboard</h3>
+            <p>Συνολική εικόνα της παραγωγικότητάς σας: KPIs, γράφημα ωρών ανά ημέρα, κατανομή ανά κατηγορία και πρόσφατη δραστηριότητα.</p>
+          </div>
+        </article>
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="calendar" aria-hidden="true">📅</span>
+          <div>
+            <h3>Ημερολόγιο</h3>
+            <p>Προβολή μήνα ή εβδομάδας. Κάντε κλικ σε μια ημέρα για να δείτε ή να προσθέσετε καταχωρήσεις χρόνου.</p>
+          </div>
+        </article>
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="timeline" aria-hidden="true">🧭</span>
+          <div>
+            <h3>Timeline</h3>
+            <p>Χρονολογική προβολή μιας ημέρας — βλέπετε πώς κατανεμήθηκε ο χρόνος σας ώρα προς ώρα.</p>
+          </div>
+        </article>
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="tasks" aria-hidden="true">✅</span>
+          <div>
+            <h3>Tasks</h3>
+            <p>Πλήρης λίστα καταχωρήσεων με φίλτρα ημερομηνίας, ώρας, κατηγορίας, status, προτεραιότητας και ετικέτας.</p>
+          </div>
+        </article>
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="reports" aria-hidden="true">📄</span>
+          <div>
+            <h3>Reports</h3>
+            <p>Συγκεντρωτικές αναφορές με δυνατότητα εξαγωγής σε Excel, PDF, CSV ή απευθείας εκτύπωση.</p>
+          </div>
+        </article>
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="statistics" aria-hidden="true">📊</span>
+          <div>
+            <h3>Στατιστικά</h3>
+            <p>Heatmap παραγωγικότητας και τάσεις με βάση το χρονικό διάστημα που επιλέγετε.</p>
+          </div>
+        </article>
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="assistant" aria-hidden="true">✨</span>
+          <div>
+            <h3>AI Βοηθός</h3>
+            <p>Τοπικός ψηφιακός βοηθός που προτείνει προγραμματισμό με βάση το ιστορικό σας — χωρίς σύνδεση στο διαδίκτυο.</p>
+          </div>
+        </article>
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="settings" aria-hidden="true">⚙️</span>
+          <div>
+            <h3>Ρυθμίσεις</h3>
+            <p>Διαχείριση κατηγοριών (όνομα, χρώμα, εικονίδιο), προτιμήσεων και θέματος εφαρμογής.</p>
+          </div>
+        </article>
+
+        <article class="guide-item">
+          <span class="guide-item-icon kpi-icon" data-accent="support" aria-hidden="true">💬</span>
+          <div>
+            <h3>Υποστήριξη</h3>
+            <p>Συχνές ερωτήσεις και πλήρης λίστα συντομεύσεων πληκτρολογίου.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="guide-footer">
+        <span><kbd>/</kbd> Αναζήτηση</span>
+        <span><kbd>N</kbd> Νέο task</span>
+        <span><kbd>Esc</kbd> Κλείσιμο παραθύρου</span>
       </div>
 
     </section>

@@ -53,6 +53,8 @@ let uiState = {
   historyFilters: {
     fromDate: "",
     toDate: "",
+    fromTime: "",
+    toTime: "",
     category: "",
     status: "",
     priority: "",
@@ -397,6 +399,8 @@ export function areFiltersActive() {
   return Boolean(
     filters.fromDate ||
       filters.toDate ||
+      filters.fromTime ||
+      filters.toTime ||
       filters.category ||
       filters.status ||
       filters.priority ||
@@ -416,6 +420,14 @@ export function getFilteredEntries() {
       }
 
       if (filters.toDate && entry.date > filters.toDate) {
+        return false;
+      }
+
+      if (filters.fromTime && entry.startTime < filters.fromTime) {
+        return false;
+      }
+
+      if (filters.toTime && entry.startTime > filters.toTime) {
         return false;
       }
 
