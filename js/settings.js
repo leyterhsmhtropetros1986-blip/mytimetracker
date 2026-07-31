@@ -39,6 +39,7 @@ export function init() {
   logoutButton = document.getElementById("settings-logout-button");
 
   logoutButton.addEventListener("click", handleLogout);
+  document.getElementById("avatar-logout-button").addEventListener("click", handleLogout);
 
   auth.getSession().then((session) => {
     cachedAccountEmail = (session && session.user && session.user.email) || "";

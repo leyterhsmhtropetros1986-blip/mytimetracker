@@ -16,12 +16,34 @@
 }
 
 .boot-loading-logo {
-  font-size: 40px;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  background: var(--brand-gradient);
+  box-shadow: 0 10px 28px rgba(100, 21, 234, 0.35);
   animation: boot-loading-pulse 1.4s var(--ease-standard) infinite;
 }
 
+.boot-loading-logo .logo-mark-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.logo-mark-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 @keyframes boot-loading-pulse {
-  0%, 100% { opacity: 0.45; transform: scale(0.94); }
+  0%, 100% { opacity: 0.55; transform: scale(0.94); }
   50% { opacity: 1; transform: scale(1); }
 }
 
@@ -81,6 +103,46 @@
 
 .auth-submit {
   width: 100%;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 44px;
+}
+
+.password-toggle-button {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.password-toggle-button:hover {
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+}
+
+.password-toggle-icon {
+  display: block;
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .auth-error {

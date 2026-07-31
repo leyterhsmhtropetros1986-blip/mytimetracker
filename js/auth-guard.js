@@ -53,6 +53,26 @@ function clearAuthMessages() {
   ].forEach((id) => showAuthMessage(id, ""));
 }
 
+function wirePasswordToggles() {
+  document.querySelectorAll("[data-toggle-password-for]").forEach((button) => {
+    const input = document.getElementById(button.dataset.togglePasswordFor);
+    const icon = button.querySelector("use");
+
+    if (!input || !icon) {
+      return;
+    }
+
+    button.addEventListener("click", () => {
+      const showing = input.type === "text";
+
+      input.type = showing ? "password" : "text";
+      icon.setAttribute("href", showing ? "#icon-eye" : "#icon-eye-off");
+      button.setAttribute("aria-pressed", String(!showing));
+      button.setAttribute("aria-label", showing ? "Εμφάνιση κωδικού" : "Απόκρυψη κωδικού");
+    });
+  });
+}
+
 function wireViewSwitchLinks() {
   document.querySelectorAll("[data-auth-view-target]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -225,6 +245,7 @@ function wireResetForm() {
 }
 
 function wireAuthForms() {
+  wirePasswordToggles();
   wireViewSwitchLinks();
   wireLoginForm();
   wireRegisterForm();
