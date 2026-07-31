@@ -4,6 +4,7 @@ import * as state from "./state.js";
 import * as ui from "./ui.js";
 import * as theme from "./theme.js";
 import * as categories from "./categories.js";
+import * as auth from "./auth.js";
 
 const WEEKDAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
@@ -15,6 +16,9 @@ let exportDataButton;
 let importDataButton;
 let importDataInput;
 let resetDataButton;
+let accountEmailElement;
+let logoutButton;
+let cachedAccountEmail = "";
 
 export function init() {
   categories.init();
@@ -31,6 +35,15 @@ export function init() {
   importDataButton = document.getElementById("settings-import-data-button");
   importDataInput = document.getElementById("settings-import-data-input");
   resetDataButton = document.getElementById("settings-reset-data-button");
+  accountEmailElement = document.getElementById("settings-account-email");
+  logoutButton = document.getElementById("settings-logout-button");
+
+  logoutButton.addEventListener("click", handleLogout);
+
+  auth.getSession().then((session) => {
+    cachedAccountEmail = (session && session.user && session.user.email) || "";
+    accountEmailElement.textContent = cachedAccountEmail || "—";
+  });
 
   themeToggle.checked = theme.getTheme() === "dark";
 
@@ -140,7 +153,23 @@ async function handleResetData() {
   ui.toast("Όλα τα δεδομένα διαγράφηκαν.", "success");
 }
 
+async function handleLogout() {
+  const confirmed = await ui.confirmDialog({
+    title: "Αποσύνδεση",
+    message: "Θα αποσυνδεθείς από τον λογαριασμό σου σε αυτή τη συσκευή. Συνέχεια;",
+    confirmText: "Αποσύνδεση"
+  });
+
+  if (!confirmed) {
+    return;
+  }
+
+  await auth.signOut();
+  window.location.reload();
+}
+
 export function render() {
+  accountEmailElement.textContent = cachedAccountEmail || "—";
   themeToggle.checked = theme.getTheme() === "dark";
 
   const preferences = state.getPreferences();

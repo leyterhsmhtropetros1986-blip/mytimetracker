@@ -4,7 +4,7 @@
  * Ανέβασε τον αριθμό όταν αλλάζουν precached αρχεία ώστε οι χρήστες να
  * παίρνουν πάντα τη νέα έκδοση και τα παλιά caches να καθαρίζονται.
  */
-const CACHE_VERSION = "v4";
+const CACHE_VERSION = "v5";
 const CACHE_NAME = `mytimetracker-${CACHE_VERSION}`;
 
 const APP_SHELL_FILES = [
@@ -24,12 +24,17 @@ const APP_SHELL_FILES = [
   "./css/assistant.css",
   "./css/settings.css",
   "./css/dashboard.css",
+  "./css/auth.css",
   "./css/responsive.css",
   "./js/app.js",
   "./js/state.js",
   "./js/storage.js",
   "./js/theme.js",
   "./js/router.js",
+  "./js/supabase.js",
+  "./js/auth.js",
+  "./js/auth-guard.js",
+  "./js/cloud-storage.js",
   "./js/charts.js",
   "./js/calendar.js",
   "./js/entries.js",

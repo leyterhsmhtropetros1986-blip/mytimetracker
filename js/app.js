@@ -5,6 +5,8 @@ import * as ui from "./ui.js";
 import * as theme from "./theme.js";
 import * as router from "./router.js";
 import * as search from "./search.js";
+import * as authGuard from "./auth-guard.js";
+import * as cloudStorage from "./cloud-storage.js";
 import * as notificationsModule from "./notifications.js";
 import * as calendarModule from "./calendar.js";
 import * as entriesModule from "./entries.js";
@@ -62,7 +64,7 @@ function renderActivePage() {
   timerModule.refreshCategoryOptions();
 }
 
-function initializeApplication() {
+function initializeApplication(session) {
   const currentDateElement = document.getElementById("current-date");
   const now = new Date();
   currentDateElement.textContent = `${formatLongDate(now)} · Εβδομάδα ${isoWeekNumber(now)}`;
@@ -98,6 +100,10 @@ function initializeApplication() {
   renderActivePage();
 
   registerServiceWorker();
+
+  cloudStorage.init(session.user.id).catch((error) => {
+    console.error("Αποτυχία αρχικοποίησης cloud sync:", error);
+  });
 }
 
 function registerServiceWorker() {
@@ -112,4 +118,4 @@ function registerServiceWorker() {
   });
 }
 
-initializeApplication();
+authGuard.init(initializeApplication);

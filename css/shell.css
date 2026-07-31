@@ -9,6 +9,10 @@
   transition: grid-template-columns var(--duration-base) var(--ease-standard);
 }
 
+.app-shell[hidden] {
+  display: none;
+}
+
 .app-shell.sidebar-collapsed {
   grid-template-columns: var(--sidebar-width-collapsed) 1fr;
 }

@@ -33,6 +33,7 @@
   <link rel="stylesheet" href="css/assistant.css">
   <link rel="stylesheet" href="css/settings.css">
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/auth.css">
   <link rel="stylesheet" href="css/responsive.css">
 
   <link rel="manifest" href="manifest.json">
@@ -140,7 +141,122 @@
     </symbol>
   </svg>
 
-  <div class="app-shell" id="app-shell">
+  <!-- Οθόνη φόρτωσης όσο ελέγχεται το session (πριν αποφασιστεί auth-shell ή app-shell) -->
+  <div id="boot-loading" class="boot-loading">
+    <span class="boot-loading-logo" aria-hidden="true">⏱️</span>
+  </div>
+
+  <!-- Σύνδεση / Εγγραφή / Επαναφορά κωδικού -->
+  <div id="auth-shell" class="auth-shell" hidden>
+    <div class="auth-card">
+
+      <div class="auth-brand">
+        <span class="sidebar-logo" aria-hidden="true">⏱️</span>
+        <span class="sidebar-brand-name">TimeTracker</span>
+      </div>
+
+      <div class="auth-view" data-auth-view="login">
+        <h1>Σύνδεση</h1>
+        <p class="section-description">Καλωσόρισες πίσω. Συνδέσου για να συνεχίσεις.</p>
+
+        <form id="auth-login-form" class="auth-form" novalidate>
+          <div class="form-group form-group-full">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" autocomplete="email" required>
+          </div>
+
+          <div class="form-group form-group-full">
+            <label for="login-password">Κωδικός</label>
+            <input type="password" id="login-password" autocomplete="current-password" required minlength="6">
+          </div>
+
+          <p class="auth-error" id="login-error" hidden></p>
+
+          <button type="submit" class="button button-primary auth-submit" id="login-submit">Σύνδεση</button>
+        </form>
+
+        <div class="auth-links">
+          <button type="button" class="auth-link-button" data-auth-view-target="forgot-password">Ξέχασες τον κωδικό;</button>
+          <button type="button" class="auth-link-button" data-auth-view-target="register">Δεν έχεις λογαριασμό; Δημιούργησε έναν</button>
+        </div>
+      </div>
+
+      <div class="auth-view" data-auth-view="register" hidden>
+        <h1>Δημιουργία λογαριασμού</h1>
+        <p class="section-description">30 ημέρες δωρεάν δοκιμή, χωρίς κάρτα.</p>
+
+        <form id="auth-register-form" class="auth-form" novalidate>
+          <div class="form-group form-group-full">
+            <label for="register-name">Όνομα</label>
+            <input type="text" id="register-name" autocomplete="name">
+          </div>
+
+          <div class="form-group form-group-full">
+            <label for="register-email">Email</label>
+            <input type="email" id="register-email" autocomplete="email" required>
+          </div>
+
+          <div class="form-group form-group-full">
+            <label for="register-password">Κωδικός</label>
+            <input type="password" id="register-password" autocomplete="new-password" required minlength="6">
+          </div>
+
+          <p class="auth-error" id="register-error" hidden></p>
+
+          <button type="submit" class="button button-primary auth-submit" id="register-submit">Δημιουργία λογαριασμού</button>
+        </form>
+
+        <div class="auth-links">
+          <button type="button" class="auth-link-button" data-auth-view-target="login">Έχεις ήδη λογαριασμό; Σύνδεση</button>
+        </div>
+      </div>
+
+      <div class="auth-view" data-auth-view="forgot-password" hidden>
+        <h1>Επαναφορά κωδικού</h1>
+        <p class="section-description">Στείλε μας το email σου και θα λάβεις link επαναφοράς.</p>
+
+        <form id="auth-forgot-form" class="auth-form" novalidate>
+          <div class="form-group form-group-full">
+            <label for="forgot-email">Email</label>
+            <input type="email" id="forgot-email" autocomplete="email" required>
+          </div>
+
+          <p class="auth-error" id="forgot-error" hidden></p>
+          <p class="auth-success" id="forgot-success" hidden></p>
+
+          <button type="submit" class="button button-primary auth-submit" id="forgot-submit">Αποστολή link</button>
+        </form>
+
+        <div class="auth-links">
+          <button type="button" class="auth-link-button" data-auth-view-target="login">Πίσω στη σύνδεση</button>
+        </div>
+      </div>
+
+      <div class="auth-view" data-auth-view="reset-password" hidden>
+        <h1>Νέος κωδικός</h1>
+        <p class="section-description">Όρισε τον νέο σου κωδικό πρόσβασης.</p>
+
+        <form id="auth-reset-form" class="auth-form" novalidate>
+          <div class="form-group form-group-full">
+            <label for="reset-password">Νέος κωδικός</label>
+            <input type="password" id="reset-password" autocomplete="new-password" required minlength="6">
+          </div>
+
+          <div class="form-group form-group-full">
+            <label for="reset-password-confirm">Επιβεβαίωση κωδικού</label>
+            <input type="password" id="reset-password-confirm" autocomplete="new-password" required minlength="6">
+          </div>
+
+          <p class="auth-error" id="reset-error" hidden></p>
+
+          <button type="submit" class="button button-primary auth-submit" id="reset-submit">Αποθήκευση νέου κωδικού</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="app-shell" id="app-shell" hidden>
 
     <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
@@ -250,6 +366,8 @@
         </button>
 
         <div class="topbar-actions">
+
+          <span id="sync-status" class="sync-status" data-status="saved" aria-live="polite"></span>
 
           <button type="button" id="theme-toggle-button" class="icon-button" aria-pressed="false" aria-label="Εναλλαγή θέματος">
             🌙
@@ -1060,6 +1178,16 @@
               <input type="file" id="settings-import-data-input" accept="application/json" hidden>
 
               <button id="settings-reset-data-button" class="button button-light danger-text" type="button">🗑️ Διαγραφή όλων</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-heading"><div><p class="eyebrow">Λογαριασμός</p><h2>Ο λογαριασμός μου</h2></div></div>
+
+            <p class="section-description" id="settings-account-email">—</p>
+
+            <div class="page-actions">
+              <button id="settings-logout-button" class="button button-light" type="button">Αποσύνδεση</button>
             </div>
           </article>
 

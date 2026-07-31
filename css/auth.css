@@ -1,0 +1,154 @@
+/* =========================================================
+   Boot loading (πριν αποφασιστεί auth-shell ή app-shell)
+========================================================= */
+
+.boot-loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--surface-page);
+  z-index: 100;
+}
+
+.boot-loading[hidden] {
+  display: none;
+}
+
+.boot-loading-logo {
+  font-size: 40px;
+  animation: boot-loading-pulse 1.4s var(--ease-standard) infinite;
+}
+
+@keyframes boot-loading-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(0.94); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-loading-logo {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   Auth shell (Σύνδεση / Εγγραφή / Επαναφορά κωδικού)
+========================================================= */
+
+.auth-shell {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  background: var(--surface-page);
+  z-index: 90;
+  overflow-y: auto;
+}
+
+.auth-shell[hidden] {
+  display: none;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: var(--space-7) var(--space-6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--space-6);
+}
+
+.auth-view h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+
+.auth-form {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.auth-submit {
+  width: 100%;
+}
+
+.auth-error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--status-critical-bg);
+  color: var(--status-critical);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.auth-success {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--status-good-bg);
+  color: var(--status-good);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.auth-links {
+  display: grid;
+  gap: 10px;
+  margin-top: var(--space-5);
+  text-align: center;
+}
+
+.auth-link-button {
+  border: 0;
+  background: none;
+  padding: 4px;
+  color: var(--brand-500);
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.auth-link-button:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   Sync status (topbar)
+========================================================= */
+
+.sync-status {
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.sync-status[data-status="syncing"] {
+  color: var(--brand-500);
+}
+
+.sync-status[data-status="offline"] {
+  color: var(--status-warning);
+}
+
+.sync-status[data-status="error"] {
+  color: var(--status-critical);
+}
+
+@media (max-width: 640px) {
+  .sync-status {
+    display: none;
+  }
+}
