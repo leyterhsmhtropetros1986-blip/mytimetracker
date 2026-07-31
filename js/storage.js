@@ -291,7 +291,7 @@ function normalizeWeeklySchedule(rawSchedule, legacyWeeklyTargetMinutes) {
   return { ...DEFAULT_PREFERENCES.weeklySchedule };
 }
 
-function normalizePreferences(rawPreferences) {
+export function normalizePreferences(rawPreferences) {
   const value = rawPreferences && typeof rawPreferences === "object" ? rawPreferences : {};
 
   return {
@@ -360,6 +360,31 @@ function createEmptyState() {
 }
 
 /**
+ * Περνάει ένα ωμό/άγνωστης προέλευσης state object (από localStorage ή από
+ * εισαγόμενο JSON backup) από τα ίδια normalize* helpers, ώστε να επιστρέφεται
+ * πάντα ένα πλήρες, έγκυρο state — ό,τι λείπει ή είναι κακοσχηματισμένο παίρνει
+ * ασφαλή defaults. Χρησιμοποιείται τόσο από loadState() όσο και από
+ * importStateSnapshot() στο state.js, ώστε τα δύο μονοπάτια να μη διαφέρουν.
+ */
+export function normalizeState(rawState) {
+  const source = rawState && typeof rawState === "object" ? rawState : {};
+  const categories = normalizeCategories(source.categories);
+  const knownCategoryNames = new Set(categories.map((category) => category.name));
+
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    entries: Array.isArray(source.entries)
+      ? source.entries.map((entry) => normalizeEntry(entry, knownCategoryNames)).filter(Boolean)
+      : [],
+    assistantTasks: Array.isArray(source.assistantTasks)
+      ? source.assistantTasks.map(normalizeAssistantTask).filter(Boolean)
+      : [],
+    categories,
+    preferences: normalizePreferences(source.preferences)
+  };
+}
+
+/**
  * Φορτώνει το ενοποιημένο state. Αν δεν υπάρχει ακόμα το νέο key,
  * κάνει migration από τα παλιά keys (χωρίς να τα διαγράφει) και το αποθηκεύει.
  * Παλιά records (schema v1, χωρίς τα νέα πεδία) περνάνε κανονικά από τα
@@ -370,18 +395,7 @@ export function loadState() {
   const existing = readJson(STATE_STORAGE_KEY);
 
   if (existing && Array.isArray(existing.entries)) {
-    const categories = normalizeCategories(existing.categories);
-    const knownCategoryNames = new Set(categories.map((category) => category.name));
-
-    const normalizedState = {
-      schemaVersion: SCHEMA_VERSION,
-      entries: existing.entries.map((entry) => normalizeEntry(entry, knownCategoryNames)).filter(Boolean),
-      assistantTasks: Array.isArray(existing.assistantTasks)
-        ? existing.assistantTasks.map(normalizeAssistantTask).filter(Boolean)
-        : [],
-      categories,
-      preferences: normalizePreferences(existing.preferences)
-    };
+    const normalizedState = normalizeState(existing);
 
     /* Αν το αποθηκευμένο schema ήταν παλιότερο (π.χ. v1 χωρίς categories/priority/tags),
        γράψε αμέσως την αναβαθμισμένη μορφή πίσω στο localStorage αντί να περιμένεις

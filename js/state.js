@@ -1,6 +1,6 @@
 "use strict";
 
-import { loadState, persistState, DEFAULT_CATEGORIES } from "./storage.js";
+import { loadState, persistState, normalizeState, normalizePreferences, DEFAULT_CATEGORIES } from "./storage.js";
 import { createId, formatDateForInput, startOfDay } from "./utils.js";
 
 export const DEFAULT_CATEGORY = "Άλλο";
@@ -505,12 +505,7 @@ export function importStateSnapshot(jsonText) {
     return { ok: false, error: "Το αρχείο δεν έχει την αναμενόμενη μορφή." };
   }
 
-  state = {
-    schemaVersion: state.schemaVersion,
-    entries: Array.isArray(parsed.entries) ? parsed.entries : [],
-    assistantTasks: Array.isArray(parsed.assistantTasks) ? parsed.assistantTasks : [],
-    categories: Array.isArray(parsed.categories) && parsed.categories.length > 0 ? parsed.categories : state.categories
-  };
+  state = normalizeState(parsed);
 
   save();
   emitChange();
@@ -523,7 +518,8 @@ export function resetAllData() {
     schemaVersion: state.schemaVersion,
     entries: [],
     assistantTasks: [],
-    categories: DEFAULT_CATEGORIES.map((category) => ({ id: createId(), ...category }))
+    categories: DEFAULT_CATEGORIES.map((category) => ({ id: createId(), ...category })),
+    preferences: normalizePreferences(null)
   };
 
   save();
