@@ -6,6 +6,8 @@ import * as ui from "./ui.js";
 
 const SHELL_IDS = ["boot-loading", "auth-shell", "app-shell"];
 
+let pendingVerificationEmail = "";
+
 function showShell(activeId) {
   SHELL_IDS.forEach((shellId) => {
     const element = document.getElementById(shellId);
@@ -40,9 +42,15 @@ function showAuthMessage(elementId, message) {
 }
 
 function clearAuthMessages() {
-  ["login-error", "register-error", "forgot-error", "forgot-success", "reset-error"].forEach((id) =>
-    showAuthMessage(id, "")
-  );
+  [
+    "login-error",
+    "register-error",
+    "forgot-error",
+    "forgot-success",
+    "reset-error",
+    "verify-code-error",
+    "verify-code-success"
+  ].forEach((id) => showAuthMessage(id, ""));
 }
 
 function wireViewSwitchLinks() {
@@ -102,13 +110,61 @@ function wireRegisterForm() {
     }
 
     if (!result.session) {
-      /* Το project απαιτεί επιβεβαίωση email πριν από το πρώτο login. */
-      ui.toast("Στάλθηκε email επιβεβαίωσης — άνοιξέ το για να ενεργοποιήσεις τον λογαριασμό σου.", "success", 6000);
-      setAuthView("login");
+      /* Το project απαιτεί επιβεβαίωση email πριν από το πρώτο login: δείξε
+         την οθόνη εισαγωγής κωδικού αντί να επιστρέψεις στο login. */
+      pendingVerificationEmail = email;
+      const descriptionElement = document.getElementById("verify-code-description");
+
+      if (descriptionElement) {
+        descriptionElement.textContent = `Στείλαμε έναν κωδικό επιβεβαίωσης στο ${email}.`;
+      }
+
+      clearAuthMessages();
+      setAuthView("verify-code");
       return;
     }
 
     window.location.reload();
+  });
+}
+
+function wireVerifyCodeForm() {
+  const form = document.getElementById("auth-verify-code-form");
+  const submitButton = document.getElementById("verify-code-submit");
+  const resendButton = document.getElementById("verify-code-resend-button");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    showAuthMessage("verify-code-error", "");
+
+    const token = document.getElementById("verify-code-input").value.trim();
+
+    ui.setButtonLoading(submitButton, true, "Επιβεβαίωση…");
+    const result = await auth.verifySignupOtp({ email: pendingVerificationEmail, token });
+    ui.setButtonLoading(submitButton, false);
+
+    if (!result.ok) {
+      showAuthMessage("verify-code-error", result.error);
+      return;
+    }
+
+    window.location.reload();
+  });
+
+  resendButton.addEventListener("click", async () => {
+    showAuthMessage("verify-code-error", "");
+    showAuthMessage("verify-code-success", "");
+
+    ui.setButtonLoading(resendButton, true, "Αποστολή…");
+    const result = await auth.resendSignupOtp(pendingVerificationEmail);
+    ui.setButtonLoading(resendButton, false);
+
+    if (!result.ok) {
+      showAuthMessage("verify-code-error", result.error);
+      return;
+    }
+
+    showAuthMessage("verify-code-success", "Στάλθηκε νέος κωδικός.");
   });
 }
 
@@ -174,6 +230,7 @@ function wireAuthForms() {
   wireRegisterForm();
   wireForgotForm();
   wireResetForm();
+  wireVerifyCodeForm();
 }
 
 /**

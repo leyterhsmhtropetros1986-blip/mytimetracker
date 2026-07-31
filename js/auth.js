@@ -110,6 +110,38 @@ export async function requestPasswordReset(email) {
   }
 }
 
+/** Επιβεβαιώνει εγγραφή με τον αριθμητικό κωδικό που στάλθηκε στο email. */
+export async function verifySignupOtp({ email, token }) {
+  try {
+    const supabase = await getSupabaseClient();
+    const { data, error } = await supabase.auth.verifyOtp({ email, token, type: "signup" });
+
+    if (error) {
+      return { ok: false, error: mapAuthError(error) };
+    }
+
+    return { ok: true, user: data.user, session: data.session };
+  } catch (error) {
+    return { ok: false, error: OFFLINE_MESSAGE };
+  }
+}
+
+/** Ξαναστέλνει τον κωδικό επιβεβαίωσης εγγραφής. */
+export async function resendSignupOtp(email) {
+  try {
+    const supabase = await getSupabaseClient();
+    const { error } = await supabase.auth.resend({ type: "signup", email });
+
+    if (error) {
+      return { ok: false, error: mapAuthError(error) };
+    }
+
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error: OFFLINE_MESSAGE };
+  }
+}
+
 export async function updatePassword(newPassword) {
   try {
     const supabase = await getSupabaseClient();
@@ -144,6 +176,14 @@ function mapAuthError(error) {
 
   if (message.includes("Email not confirmed")) {
     return "Επιβεβαίωσε πρώτα το email σου — έλεγξε τα εισερχόμενά σου.";
+  }
+
+  if (message.includes("Token has expired or is invalid")) {
+    return "Ο κωδικός είναι λάθος ή έχει λήξει. Ζήτησε νέο κωδικό.";
+  }
+
+  if (message.includes("For security purposes")) {
+    return "Περίμενε λίγα δευτερόλεπτα πριν ζητήσεις νέο κωδικό.";
   }
 
   return message || "Κάτι πήγε στραβά. Δοκίμασε ξανά.";
